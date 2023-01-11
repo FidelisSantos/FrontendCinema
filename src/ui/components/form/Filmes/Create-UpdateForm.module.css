@@ -1,0 +1,11 @@
+.form-container {
+  height: 500px;
+  width: 100%;
+  overflow: auto;
+}
+
+.form-genero-options {
+  height: 200px;
+  width: 100%;
+  overflow: auto;
+}

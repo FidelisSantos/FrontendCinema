@@ -1,0 +1,23 @@
+.loader-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 35vh;
+}
+
+.table-filmes-container{
+  display: flex;
+  text-align: center;
+  width: 100%;
+  background: rgb(2,0,36);
+  background: linear-gradient(90deg, rgb(150, 150, 153) 0%, rgb(90, 89, 89) 35%, rgb(189, 189, 189) 100%);
+}
+
+.table-filmes {
+  justify-content: space-between;
+  color: black;
+  align-items: center;
+}
+
+.thead-filmes {
+  width: 100%;
+}

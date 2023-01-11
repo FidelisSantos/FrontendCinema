@@ -1,0 +1,19 @@
+.home-container {
+  align-items: center;
+}
+
+.card-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 5vh;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+}
+
+.loader-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 35vh;
+}

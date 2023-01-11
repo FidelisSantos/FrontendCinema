@@ -1,0 +1,15 @@
+.sessao-container{
+  margin-bottom: 20px;
+}
+
+.modal-header {
+  background-color: black;
+  color: white;
+  justify-content: center;
+}
+
+.legend-text{
+  font-size: 1rem;
+  font-weight: bold;
+  margin-top: 10px;
+}
