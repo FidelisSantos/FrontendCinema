@@ -1,7 +1,7 @@
 import { FilmeType } from "./filmeType";
-import { SessaoType } from "./sessaoType";
+import { SessaoFilmeSessao } from "./sessaoFilmeSessaoType";
 
 export type FilmeSessaoType = {
   filme: FilmeType,
-  sessoes: SessaoType[];
+  sessoes: SessaoFilmeSessao[];
 }

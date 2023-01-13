@@ -18,7 +18,8 @@ export function CardFilmes(props: FilmeSessaoType) {
         <CardBody>
           <CardTitle className={styles['card-title']}>{props.filme.titulo}</CardTitle>
           <CardSubtitle className={styles['card-subtitle']}><strong>Gênero:</strong></CardSubtitle>
-          <CardText>{props.filme.tags.map((tag) => <p key={tag.id}>{tag.tag}</p>)}</CardText>
+          <CardText className={styles['card-tags']}>{props.filme.tags.map((tag) => 
+            <p key={tag.id} className={styles['card-tags-text']}>{tag.tag}</p>)}</CardText>
           <CardText>Tempo de Filme: {props.filme.tempoDeFilme} minutos</CardText>
           <Button onClick={toggleModal} className={styles['card-button']}>Ver Mais</Button>
           {<FilmeSessaoModal filme={props.filme} sessoes={props.sessoes} toggleModal={toggleModal} isOpen={isOpen}/>}

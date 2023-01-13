@@ -5,13 +5,12 @@ import { ThreeCircles } from 'react-loader-spinner';
 import styles from './Filmes.module.css';
 import { Navigate } from 'react-router-dom';
 import { VscAdd, VscSettingsGear } from 'react-icons/vsc';
-import { Table } from 'reactstrap';
-import { ListFilmes } from '../../components/table/ListFilmes/ListFilmes';
-import { CreateUpdateModal } from '../../components/modal/Filmes/Create-UpdateModal';
+import { CreateModal } from '../../components/modal/Filmes/CreateModal/CreateModal';
+import { CardFilmes } from '../../components/card/Filmes/CardFilmes';
 
 export function Filmes({...props}) {
   const { filmes, loading, error, setError, getFilmesList, 
-          deleteFilme, createFilme, isOpen, setIsOpen } = useFilmes()
+          deleteFilme, createFilme,isOpen, setIsOpen, tags, updateFilme } = useFilmes()
 
   useEffect(() => {
     if(!localStorage.getItem('token')) {
@@ -27,6 +26,7 @@ export function Filmes({...props}) {
   },[]);
 
   function setIsAuth() {
+    localStorage.removeItem('token');
     props.setIsAuth(false);
   }
 
@@ -36,6 +36,9 @@ export function Filmes({...props}) {
 
   return (
     <>
+    <HeaderAdm  isAuth={props.isAuth} setIsAuth={setIsAuth} error={props.error}
+        setError={props.setError} errorMessage={props.errorMessage} 
+        setErrorMessage={props.setErrorMessage} page={props.page}/>
       {loading && 
         <div className={styles['loader-container']}>
             <ThreeCircles 
@@ -55,28 +58,16 @@ export function Filmes({...props}) {
       {!loading && error == 'Erro ao Listar a sala' 
         && <VscSettingsGear/>}
       {!loading && error != 'token' && error != 'Erro ao Listar a sala' &&
-      <>  
-      <HeaderAdm  isAuth={props.isAuth} setIsAuth={setIsAuth} error={props.error}
-          setError={props.setError} errorMessage={props.errorMessage} 
-          setErrorMessage={props.setErrorMessage} page={props.page}/>
-      <div className={styles['table-filmes-container']}>
-      <Table className={styles['table-filmes']}>
-      <thead className={styles['thead-filmes']}>
-        <tr>
-          <th><button onClick={toogleModal}><VscAdd/></button></th>
-          <CreateUpdateModal isOpen={isOpen} toogleModal={toogleModal}/>
-          <th>Imagem</th>
-          <th>Titulo</th>
-          <th>Genero</th>
-          <th>Descrição</th>
-          <th>Tempo de Filme</th>
-        </tr>
-      </thead>
-      <tbody>
-        {filmes.map(filme => <tr key={filme.id}><ListFilmes filme={filme} deleteFilme={deleteFilme} /> </tr>)}
-      </tbody>
-    </Table>
-    </div>
+      <>
+      <div className={styles['filmes']}>
+        <h1><strong>Filmes</strong></h1>
+        <button onClick={toogleModal}><VscAdd/></button>
+        <CreateModal isOpen={isOpen} setIsOpen={setIsOpen} tags={tags} createFilme={createFilme}/>
+      </div>
+      <div className={styles['filmes-container']}>
+          {filmes.map((filme)=> <CardFilmes deleteFilme={deleteFilme} 
+            filme={filme} updateFilme={updateFilme} tags={tags}/>)}
+      </div>
       </>}
   </>
   )

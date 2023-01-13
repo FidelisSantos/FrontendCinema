@@ -2,9 +2,9 @@ import {Button, Modal, ModalHeader, ModalBody, ModalFooter} from 'reactstrap'
 
 import { HomeModalBodySessao } from './FilmeSessaoModalStatus/FilmeSessaoModalStatus';
 import styles from './FilmeSessaoModal.module.css';
-import { SessaoType } from '../../../../../types/sessaoType';
+import { SessaoFilmeSessao } from '../../../../../types/sessaoFilmeSessaoType';
 
-export function FilmeSessaoModal({...props}) {
+export function FilmeSessaoModal({...props}, sessoes: SessaoFilmeSessao[]) {
 
   console.log(props.sessoes);
   
@@ -21,20 +21,20 @@ export function FilmeSessaoModal({...props}) {
       </fieldset>
       <fieldset>
         <legend className={styles['legend-text']}>Próximas Sessoes:</legend>
-        {props.sessoes.map((sessao:SessaoType)=> 
+        {props.sessoes.map((sessao:SessaoFilmeSessao)=> 
         <div key={sessao.sessaoId} className={'sessao-container'}>
           {sessao.status == 'Aguardando' && 
         <HomeModalBodySessao {...sessao}/>}</div> )}
       </fieldset>
       <fieldset>
         <legend className={styles['legend-text']}>Sessoes Rodando:</legend>
-        {props.sessoes.map((sessao:SessaoType)=> 
+        {props.sessoes.map((sessao:SessaoFilmeSessao)=> 
         <div key={sessao.sessaoId}>{sessao.status == 'Rodando' && 
         <HomeModalBodySessao {...sessao}/>}</div> )}
       </fieldset>
       <fieldset>
         <legend className={styles['legend-text']}>Sessoes Finalizadas:</legend>
-        {props.sessoes.map((sessao:SessaoType)=> 
+        {props.sessoes.map((sessao:SessaoFilmeSessao)=> 
         <div key={sessao.sessaoId}>{sessao.status == 'Terminado' && 
         <HomeModalBodySessao {...sessao}/>}</div> )}
       </fieldset>

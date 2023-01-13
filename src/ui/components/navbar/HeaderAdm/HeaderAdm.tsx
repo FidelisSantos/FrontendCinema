@@ -56,15 +56,23 @@ export function HeaderAdm({...props}) {
                       <NavLink className={styles['nav-header']} >Salas</NavLink>
                     </Link>
                   </NavItem>}
+                  {props.page != 'tags'&& <NavItem>
+                    <Link to='/tags'  className={styles['nav-header-link']}>
+                    <NavLink className={styles['nav-header']} >Tags</NavLink>
+                    </Link>
+                  </NavItem>}
                  {props.page != 'filmes' && 
                  <NavItem>
                     <Link to='/filmes'  className={styles['nav-header-link']}>
                       <NavLink className={styles['nav-header']} >Filmes</NavLink>
                     </Link>
                   </NavItem>}
+                  {props.page != 'sessoes' &&
                   <NavItem>
-                    <NavLink className={styles['nav-header']} >Sessões</NavLink>
-                  </NavItem>
+                    <Link to='/sessoes'  className={styles['nav-header-link']}>
+                      <NavLink className={styles['nav-header']} >Sessões</NavLink>
+                    </Link>
+                  </NavItem>}
                   <NavItem >
                     <NavLink className={styles['nav-header']} onClick={deslogar}>Sair</NavLink>
                   </NavItem>

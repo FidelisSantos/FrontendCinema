@@ -5,7 +5,12 @@
 }
 
 .form-genero-options {
-  height: 200px;
+  max-height: 150px;
   width: 100%;
   overflow: auto;
+}
+
+.genero-label-button {
+  display: flex;
+  justify-content: space-between;
 }

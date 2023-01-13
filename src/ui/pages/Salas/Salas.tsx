@@ -62,6 +62,7 @@ export function Salas({...props}) {
           <th><button onClick={createSala}><VscAdd/></button></th>
           <th>Salas</th>
           <th>Status</th>
+          <th></th>
         </tr>
       </thead>
       <tbody>

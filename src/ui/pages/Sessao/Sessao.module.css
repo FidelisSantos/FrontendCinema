@@ -1,0 +1,12 @@
+.loader-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 35vh;
+}
+
+.table-tags-container{
+  display: flex;
+  text-align: center;
+  width: 100%;
+  background: linear-gradient(90deg, rgb(150, 150, 153) 0%, rgb(90, 89, 89) 35%, rgb(189, 189, 189) 100%);
+}

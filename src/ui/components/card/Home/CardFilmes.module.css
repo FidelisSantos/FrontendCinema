@@ -7,19 +7,17 @@
 }
 
 .card {
-  width: 300px;
-  height: 400px;
+  width: 400px;
+  height: 450px;
   margin: 30px;
   background-color: black;
   color: white;
 }
 
 .card-img {
-  width: 300px;
+  width: 400px;
   height: 200px;
 }
-
-
 
 .card-title {
   font-weight: bold;
@@ -29,4 +27,16 @@
 
 .card-button {
   text-align: center;
+}
+
+.card-tags {
+  display: flex;
+  justify-content: center;
+  margin: 5px;
+}
+
+.card-tags-text {
+  display: flex;
+  text-align: center;
+  margin: 8px 5px;
 }

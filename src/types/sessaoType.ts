@@ -1,7 +1,11 @@
+import { FilmeType } from "./filmeType";
+import { SalaType } from "./salaType";
+
 export type SessaoType = {
-  sessaoId: number;
-  salaId: number;
-  inicio: Date;
-  fim: Date;
+  id: number;
+  init: Date;
+  finish: Date;
   status: string;
+  filme: FilmeType;
+  sala: SalaType;
 }

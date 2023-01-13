@@ -1,10 +1,11 @@
+import { SessaoFilmeSessao } from "../../../../../../types/sessaoFilmeSessaoType";
 import { SessaoType } from "../../../../../../types/sessaoType";
 
 
 
-export function HomeModalBodySessao(props:SessaoType) {
+export function HomeModalBodySessao(props:SessaoFilmeSessao) {
   const dateInit = new Date(props.inicio);
-  console.log(dateInit);
+  console.log(props.salaId);
   return(
     <div key={props.sessaoId}>
       <strong>Sala {props.salaId}: </strong> 

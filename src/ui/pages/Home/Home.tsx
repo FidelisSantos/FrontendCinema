@@ -14,6 +14,7 @@ export function Home ({...props}) {
       await getFilmeSessoes();
     }
     getSessoes();
+    console.log(filmeSessoes);
 
     props.setPage('home');
   }, []);

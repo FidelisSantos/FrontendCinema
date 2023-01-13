@@ -1,6 +1,7 @@
 import { AxiosError } from "axios";
 import { api } from "../../../../api/api";
 import { FilmeType } from "../../../../types/filmeType";
+import { PostFilmeType } from "../../../../types/postFilmeType";
 
 export const filmesService = {
   getFilmes: async (token: string) =>{
@@ -35,7 +36,7 @@ export const filmesService = {
      return isDeleted;
   },
 
-  createFilme: async (token: string, body: FilmeType) => {
+  createFilme: async (token: string, body: PostFilmeType) => {
     console.log(body);
     const Create = await api.post(`filme`, body, { headers: {Authorization: token}})
       .then(() => true)
@@ -49,5 +50,22 @@ export const filmesService = {
         }
       });
       return Create;
+  },
+
+  patchFilme: async (token: string, body: PostFilmeType, id: number) => {
+    console.log(body);
+    const UpdateFilme = 
+          await api.patch(`filme/${id}`, body , { headers: {Authorization: token}})
+                .then(()=> true)
+                .catch((error: AxiosError) => {
+                  console.log(error.response,'delete')
+                  if (error.response && error.response.status === 401) 
+                        return 'Unauthorized';
+                  else {
+                    const errorMessage = error.response?.statusText;
+                    return errorMessage ? errorMessage : false;
+                  }
+                });
+              return UpdateFilme
   }
 }

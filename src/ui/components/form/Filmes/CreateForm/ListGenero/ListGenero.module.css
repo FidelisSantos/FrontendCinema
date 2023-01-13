@@ -1,0 +1,15 @@
+.listgenero-container{
+  display: flex;
+}
+
+.listgenero-label{
+
+}
+
+.listgenero-container-button{
+  display: flex;
+  margin-left: 0%;
+  align-items: flex-end;
+  width: 20%;
+  ;
+}
