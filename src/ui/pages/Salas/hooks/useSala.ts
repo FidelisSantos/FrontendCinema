@@ -5,25 +5,27 @@ import { salaService } from '../service/salasService';
 export function useSala() {
   const [salas, setSalas] = useState<SalaType[]>([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string>('');
+  const [error, setError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
  
   const getSalaList = async () => {
     const token = `Bearer ${localStorage.getItem('token')}`;
     if (token) { 
       const response = await salaService.getSalaList(token);
-      console.log(response);
       if(response == 'Unauthorized') {
-        setError('token');
+        setErrorMessage('token');
         return;
       }
       else if(response == 'Error') {
-        setError('Erro ao Listar a sala');
+        setErrorMessage('Erro ao Listar a sala');
+        setError(true)
+        setLoading(false);
         return;
       }
       setSalas(response)
     }
     else{
-      setError('token');
+      setErrorMessage('token');
       if(token)
         localStorage.removeItem('token');
     }
@@ -38,20 +40,27 @@ export function useSala() {
       const response = await salaService.postSala(token);
       console.log(response);
       if(response == 'Unauthorized') {
-        setError('token');
+        setErrorMessage('token');
         setLoading(false);
         return;
       }
       else if(!response) {
-        setError('Erro ao criar a sala');
+        setErrorMessage('Erro ao criar a sala');
+        setError(true)
         setLoading(false);
         return;
+      } else if(response){
+        getSalaList();
+        return;
       }
-      getSalaList();
-      return;
+      else{
+        setErrorMessage(response);
+        setLoading(false);
+        setError(true);
+      }
     }
     else
-      setError('token');
+    setErrorMessage('token');
     setLoading(false);
   }
 
@@ -62,22 +71,28 @@ export function useSala() {
       const response = await salaService.deleteSala(token, id);
       console.log(response);
       if(response == 'Unauthorized') {
-        setError('token');
+        setErrorMessage('token');
         setLoading(false);
         return;
       }
       else if(!response) {
-        setError('Erro ao deletar a sala');
+        setErrorMessage('Erro ao deletar a sala');
         setLoading(false);
         return;
+      } else if(response === true){
+        getSalaList();
+        return;
+      } else {
+        setErrorMessage(response);
+        setLoading(false);
+        setError(true);
       }
-      getSalaList();
-      return;
+      
     }
     else
-      setError('token');
+    setErrorMessage('token');
     setLoading(false);
   }
 
-  return { salas, loading, error, setError, getSalaList, createSala, deleteSala }
+  return { salas, loading, error, setError, getSalaList, createSala, deleteSala, errorMessage, setErrorMessage }
 }

@@ -1,0 +1,6 @@
+.alert-container{
+  display: flex;
+  text-align: center;
+  width: 30%;
+  justify-content: center;
+}

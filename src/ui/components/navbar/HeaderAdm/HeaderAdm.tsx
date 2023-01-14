@@ -12,10 +12,9 @@ import { Link, Navigate } from 'react-router-dom';
 import logo from '../../../../img/logo.png';
 
 export function HeaderAdm({...props}) {
-
   function deslogar() {
     localStorage.removeItem('token');
-    props.setIsAuth(false);
+    location.reload();
   }
 
   if(props.error){
@@ -24,7 +23,6 @@ export function HeaderAdm({...props}) {
       clearInterval(errorInterval);
     }, 5000);
   }
-  console.log(props.page);
 
   return (
     <>

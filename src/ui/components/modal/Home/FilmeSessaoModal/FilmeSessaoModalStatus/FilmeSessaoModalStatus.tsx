@@ -1,15 +1,14 @@
 import { SessaoFilmeSessao } from "../../../../../../types/sessaoFilmeSessaoType";
-import { SessaoType } from "../../../../../../types/sessaoType";
 
 
 
 export function HomeModalBodySessao(props:SessaoFilmeSessao) {
-  const dateInit = new Date(props.inicio);
+  const inicio = new Date(props.inicio);
   console.log(props.salaId);
   return(
     <div key={props.sessaoId}>
       <strong>Sala {props.salaId}: </strong> 
-      {dateInit.toLocaleDateString()} {dateInit.getHours()}:{dateInit.getMinutes()}
+      {`${inicio.toLocaleDateString()} - ${inicio.getHours() < 10 ? '0'+ inicio.getHours():inicio.getHours()}: ${inicio.getMinutes()< 10 ? '0'+ inicio.getMinutes():inicio.getMinutes()}` }
     </div>
   );
 }

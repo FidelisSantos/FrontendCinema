@@ -7,6 +7,7 @@ export function useApp() {
   const [error, setError] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>('');
   const [page, setPage] = useState('home');
+  const errorImg = "https://firebasestorage.googleapis.com/v0/b/cinema-37539.appspot.com/o/FilmesImagens%2Ferror.png?alt=media&token=fb3b22a0-ae8e-44e1-ba64-0aabd1c1814b"
   
   const loginAdm = async (email: string, password: string) => { 
     const login: LoginType = {
@@ -29,5 +30,5 @@ export function useApp() {
   return { isAuth, setIsAuth, loginAdm , 
             errorLogin, setErrorLogin,
           error, setError,errorMessage, 
-          setErrorMessage, page, setPage};
+          setErrorMessage, page, setPage, errorImg};
 }

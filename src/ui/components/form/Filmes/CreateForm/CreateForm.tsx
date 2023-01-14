@@ -39,20 +39,33 @@ export function CreateForm({...props}) {
     setTempoFilme(minutes);
   }
 
-  function createFilme() {
-    const imagem = fileImg? fileImg: linkImg;
-    console.log(titulo, tempoFilme, genero, descricao, imagem)
-    props.createFilme(titulo, tempoFilme, genero, descricao, imagem)
+  async function createFilme(e: FormEvent<HTMLFormElement>) {
+    e.preventDefault()
+    let imagem
+    console.log(fileImg as File);
+    if(fileImg || !linkImg ) {
+      createUrl(e);
+    } else{
+      imagem = linkImg
+      props.createFilme(titulo, tempoFilme, genero, descricao, imagem)
+    } 
+  }
+
+  async function createUrl(e: FormEvent<HTMLFormElement>) {
+    const formData = new FormData(e.currentTarget);
+    const file = formData.get('imageFile') as File;
+    console.log(file);
+    props.createUrl(file, titulo, tempoFilme, genero, descricao);
   }
   
   return (
-    <Form className={styles['form-container']} onSubmit={createFilme}>
+    <Form className={styles['form-container']} method='POSt' onSubmit={createFilme}>
     <FormGroup>
       <Label>Titulo</Label>
       <Input 
         type="text"  
         placeholder="Informe o titulo" 
-        onChange={(e: any) => {
+        onChange={(e) => {
           setTitulo(e.target.value)
           console.log(titulo, e.target.value)}}
         value={titulo}
@@ -61,7 +74,7 @@ export function CreateForm({...props}) {
     </FormGroup>
     <FormGroup>
       <Label>Tempo de Filme</Label>
-      <Input type="text" 
+      <Input type="time" 
       inputMode="numeric"
       placeholder="Informe o tempo do filme em minutos(ex 01:50)"
       id='tempoFilme'
@@ -69,9 +82,9 @@ export function CreateForm({...props}) {
       value={hourMinute}
       required/>
     </FormGroup>
-    <FormGroup className={styles['form-genero']}>
-      <Label>Selecione Gênero </Label> 
-      <div className={styles['form-genero-options']}>
+    <FormGroup className={styles['form-tags']}>
+      <Label>Selecione as Tags </Label> 
+      <div className={styles['form-tags-options']}>
         {props.tags.map((tag:TagType) => <ListGenero tag={tag}
            key={tag.id} genero={genero} setGenero={setGenero}/>)}
       </div>
@@ -81,7 +94,7 @@ export function CreateForm({...props}) {
       <Input
         type="textarea" 
         placeholder="Informe a descrição" 
-        onChange={(e: any) => {
+        onChange={(e) => {
           setDescricao(e.target.value)
           console.log(descricao, e.target.value)}}
         value={descricao}
@@ -96,6 +109,7 @@ export function CreateForm({...props}) {
           setFileImg(e.target.value);
         }}
         required={linkImg ? false: true}
+        name='imageFile'
         />
       <Input 
         type="url" 
@@ -111,7 +125,7 @@ export function CreateForm({...props}) {
         Favor colocar arquivo da imagem ou link da imagem
       </FormText>
     </FormGroup>
-    <Button onClick={createFilme}>Cadastrar</Button>
+    <Button type="submit">Cadastrar</Button>
   </Form>
   )
 }

@@ -17,6 +17,7 @@ export function UpdateForm({...props}) {
   const [fileImg, setFileImg] = useState<File>();
   const [linkImg, setLinkImg] = useState(props.filme.linkImagem);
   const [genero, setGenero] = useState<number[]>([]);
+  const [tempoFilmeAtual, setTempoFilmeAtual] = useState('');
 
 useEffect(() =>{
   const formatteHour = () =>{
@@ -27,8 +28,16 @@ useEffect(() =>{
 
     return hourMinutes
   }
-  setHourMinute(formatteHour)
-
+  
+  const fomatterHourAtual = () => {
+    const hour = formatteHour();
+    setHourMinute(hour);
+    const hourArray= hour.split(':');
+     hourArray[0] = +hourArray[0] < 10 ? '0'+ hourArray[0] : hourArray[0];
+     hourArray[1] = +hourArray[1] < 10 ? '0'+ hourArray[1] : hourArray[1];
+     setTempoFilmeAtual( `${hourArray[0]}:${hourArray[1]}`);
+  }
+  fomatterHourAtual()
   const formatteGenero = () => {
     const tagsId: number[] =[]
     for (let index = 0 ; index < props.filme.tags.length ; index++){
@@ -48,8 +57,10 @@ useEffect(() =>{
     const verifyValue = value.split(':');
     verifyValue[1] = +verifyValue[1] >= 60 ? '59': verifyValue[1];
     value = verifyValue.toString();
+    console.log(value, 'valor');
     value = value.replace(/\D/g,'');
     value = value.replace(/^(\d{2})(\d)/,"$1:$2");
+    console.log(value, 'valor');
     setHourMinute(value);
     calcMinutes(value);
   }
@@ -61,14 +72,26 @@ useEffect(() =>{
     setTempoFilme(minutes);
   }
 
-  function updateFilme() {
-    const imagem = fileImg? fileImg: linkImg;
-    console.log(titulo, tempoFilme, genero, descricao, imagem)
-    props.updateFilme(titulo, tempoFilme, genero, descricao, imagem, props.filme.id)
+  function updateFilme(e: FormEvent<HTMLFormElement>) {
+    e.preventDefault()
+    if(fileImg) {
+      updateUrl(e)
+    }else {
+      console.log(titulo, tempoFilme, genero, descricao, linkImg);
+      props.updateFilme(titulo, tempoFilme, genero, descricao, linkImg, props.filme.id)
+    }
+
+    
+  }
+
+  function updateUrl(e: FormEvent<HTMLFormElement>){
+    const formData = new FormData(e.currentTarget);
+    const file = formData.get('imageFile') as File;
+    props.updateUrl(titulo, tempoFilme, genero,descricao, file);
   }
   
   return (
-    <Form className={styles['form-container']}>
+    <Form className={styles['form-container']} onSubmit={updateFilme}>
     <FormGroup>
       <Label>Titulo</Label>
       <Input 
@@ -83,17 +106,21 @@ useEffect(() =>{
     </FormGroup>
     <FormGroup>
       <Label>Tempo de Filme</Label>
-      <Input type="text" 
+      <Input type="time" 
       inputMode="numeric"
       placeholder="Informe o tempo do filme em minutos(ex 01:50)"
       id='tempoFilme'
       onChange={maskHours}
       defaultValue={hourMinute}
+      value={hourMinute}
       required/>
     </FormGroup>
-    <FormGroup className={styles['form-genero']}>
+    <FormText color="muted">
+        Tempo atual de filme {tempoFilmeAtual}
+      </FormText>
+    <FormGroup className={styles['form-tags']}>
       <Label>Selecione Gênero </Label> 
-      <div className={styles['form-genero-options']}>
+      <div className={styles['form-tags-options']}>
         {props.tags.map((tag:TagType)=> 
           <ListGenero genero={genero} setGenero={setGenero} tag={tag} />)}
       </div>
@@ -118,13 +145,14 @@ useEffect(() =>{
           setFileImg(e.target.value);
         }}
         required={linkImg ? false: true}
+        name='imageFile'
         />
       <Input 
         type="url" 
         disabled={fileImg ? true: false}
-        onChange={(e: any) => {
+        onChange={(e) => 
           setLinkImg(e.target.value)
-          console.log(linkImg, e.target.value)}}
+         }
         value={linkImg}
         placeholder='Link da Imagem'
         required={fileImg ? false: true}
@@ -133,7 +161,7 @@ useEffect(() =>{
         Favor colocar arquivo da imagem ou link da imagem
       </FormText>
     </FormGroup>
-    <Button onClick={updateFilme}>Atualizar</Button>
+    <Button type='submit'>Atualizar</Button>
   </Form>
   )
 }

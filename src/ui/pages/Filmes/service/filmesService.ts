@@ -2,6 +2,9 @@ import { AxiosError } from "axios";
 import { api } from "../../../../api/api";
 import { FilmeType } from "../../../../types/filmeType";
 import { PostFilmeType } from "../../../../types/postFilmeType";
+import { getDownloadURL, uploadBytes, deleteObject } from 'firebase/storage';
+import { storage } from '../../../../firebase/firebase-app';
+import { ref } from 'firebase/storage';
 
 export const filmesService = {
   getFilmes: async (token: string) =>{
@@ -24,13 +27,12 @@ export const filmesService = {
   deleteFilme: async (token: string, id: number) => {
     const isDeleted = await api.delete(`filme/${id}`,{ headers: {Authorization: token}})
       .then(() => true)
-      .catch((error:AxiosError) => {
+      .catch((error) => {
         if (error.response && error.response.status === 401) 
               return 'Unauthorized';
-        else{
-          const errorMessage = error.response?.statusText;
-          return { errorMessage };
-        }
+        if (error.response && error.response.status === 500) 
+              return false;
+        else return error.response.data.message;
       });
 
      return isDeleted;
@@ -40,14 +42,13 @@ export const filmesService = {
     console.log(body);
     const Create = await api.post(`filme`, body, { headers: {Authorization: token}})
       .then(() => true)
-      .catch((error:AxiosError) => {
+      .catch((error) => {
         console.log(error.response,'delete')
         if (error.response && error.response.status === 401) 
               return 'Unauthorized';
-        else {
-          const errorMessage = error.response?.statusText;
-          return errorMessage ? errorMessage : false;
-        }
+        if (error.response && error.response.status === 500) 
+              return false;
+        else return error.response.data.message;
       });
       return Create;
   },
@@ -57,15 +58,32 @@ export const filmesService = {
     const UpdateFilme = 
           await api.patch(`filme/${id}`, body , { headers: {Authorization: token}})
                 .then(()=> true)
-                .catch((error: AxiosError) => {
+                .catch((error) => {
                   console.log(error.response,'delete')
                   if (error.response && error.response.status === 401) 
                         return 'Unauthorized';
-                  else {
-                    const errorMessage = error.response?.statusText;
-                    return errorMessage ? errorMessage : false;
-                  }
+                  if (error.response && error.response.status === 500) 
+                        return false;
+                  else return error.response.data.message;
                 });
               return UpdateFilme
+  },
+
+  createFirebaseUrl:  async (titulo: string, imagem: File)=>{
+    const linkImageFolder = ref(storage, `FilmesImagens/${titulo}`);
+    try{
+      const upload = await uploadBytes(linkImageFolder, imagem);
+      return  await getDownloadURL(upload.ref) as string;
+    }catch {
+      return "Erro gerar Url";
+    }
+  },
+
+  deleteImageUrl: async (image: string) =>{
+    const fileRef = ref(storage, image);
+    console.log(fileRef)
+    const del = await deleteObject(fileRef)
+        .then(() => console.log('deu boa'))
+        .catch(() => console.log('deu ruim'));
   }
 }

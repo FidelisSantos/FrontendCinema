@@ -1,0 +1,16 @@
+.form-container {
+  height: 500px;
+  width: 100%;
+  overflow: auto;
+}
+
+.form-tags-options {
+  max-height: 150px;
+  width: 100%;
+  overflow: auto;
+}
+
+.tags-label-button {
+  display: flex;
+  justify-content: space-between;
+}

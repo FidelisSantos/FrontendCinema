@@ -4,13 +4,13 @@
   overflow: auto;
 }
 
-.form-genero-options {
+.form-tags-options {
   max-height: 150px;
   width: 100%;
   overflow: auto;
 }
 
-.genero-label-button {
+.tags-label-button {
   display: flex;
   justify-content: space-between;
 }

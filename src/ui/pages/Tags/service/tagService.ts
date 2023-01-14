@@ -24,12 +24,13 @@ export const tagService = {
   deleteTag: async (id: number ,token: string) =>{
     const isDeleted = await api.delete(`tags/${id}`,{ headers: {Authorization: token}})
       .then(() => true)
-      .catch((error:AxiosError) => {
+      .catch((error) => {
         if (error.response && error.response.status === 401) 
               return 'Unauthorized';
+        else if (error.response && error.response.status === 500)
+              return 'Erro ao Deletar';
         else{
-          const errorMessage = error.response?.statusText;
-          return { errorMessage };
+          return error.response.data.message;
         }
       });
 
@@ -40,13 +41,14 @@ export const tagService = {
     console.log(body);
     const Create = await api.post(`tags`, body, { headers: {Authorization: token}})
       .then(() => true)
-      .catch((error:AxiosError) => {
+      .catch((error) => {
         console.log(error.response,'delete')
         if (error.response && error.response.status === 401) 
               return 'Unauthorized';
+        else if (error.response && error.response.status === 500)
+          return 'Erro ao criar';
         else {
-          const errorMessage = error.response?.statusText;
-          return errorMessage ? errorMessage : false;
+          return error.response.data.message;
         }
       });
       return Create;
@@ -56,13 +58,12 @@ export const tagService = {
     console.log(body);
     const Create = await api.patch(`tags/${id}`, body, { headers: {Authorization: token}})
       .then(() => true)
-      .catch((error:AxiosError) => {
+      .catch((error) => {
         console.log(error.response,'delete')
         if (error.response && error.response.status === 401) 
               return 'Unauthorized';
         else {
-          const errorMessage = error.response?.statusText;
-          return errorMessage ? errorMessage : false;
+          return error.response.data.message;
         }
       });
       return Create;

@@ -1,5 +1,5 @@
 import { Table } from "reactstrap";
-import { VscAdd, VscSettingsGear } from "react-icons/vsc";
+import { VscAdd } from "react-icons/vsc";
 import { HeaderAdm } from '../../components/navbar/HeaderAdm/HeaderAdm';
 import { useEffect } from 'react';
 import { Navigate } from "react-router-dom";
@@ -7,14 +7,16 @@ import { useSala } from './hooks/useSala';
 import { ListSalas } from "../../components/table/ListSalas/ListSalas";
 import { ThreeCircles } from "react-loader-spinner";
 import styles from './Sala.module.css';
+import { AlertError } from "../../components/alert/Alert";
 
 
 export function Salas({...props}) {
-  const {salas, loading, error, setError, getSalaList, createSala, deleteSala } = useSala()
+  const { salas, loading, error, setError, getSalaList, 
+          createSala, deleteSala, errorMessage, setErrorMessage} = useSala()
 
   useEffect(() => {
     if(!localStorage.getItem('token')) {
-      setError('token');
+      setErrorMessage('token');
     }
     const getSalas = async ()=> {
       await getSalaList();
@@ -32,8 +34,21 @@ export function Salas({...props}) {
     deleteSala(id);
   }
 
+  if(error){
+    const errorTimeOut = setInterval(() =>{
+      setError(false);
+      clearInterval(errorTimeOut);
+    }, 5000);
+  }
+
   return (
     <>
+      <HeaderAdm  isAuth={props.isAuth} setIsAuth={setIsAuth} error={props.error}
+          setError={props.setError} errorMessage={props.errorMessage} 
+          setErrorMessage={props.setErrorMessage} page={props.page}/>
+          <div className={styles['alert-container']}>
+            <AlertError error={error} setError={setError} errorMessage={errorMessage}/>
+          </div>
       {loading && 
         <div className={styles['loader-container']}>
             <ThreeCircles 
@@ -48,13 +63,11 @@ export function Salas({...props}) {
               innerCircleColor=""
               middleCircleColor=""/>
         </div>}
-      {!loading && error == 'token' ||!localStorage.getItem('token') &&  <Navigate  to={'/'} state={props.setIsAuth(false)}/>}
-      {!loading && error == 'Erro ao Listar a sala' && <VscSettingsGear/>}
-      {!loading && error != 'token' && error != 'Erro ao Listar a sala' &&
+      {!loading && errorMessage == 'token' ||!localStorage.getItem('token') &&  <Navigate  to={'/'} state={props.setIsAuth(false)}/>}
+      {!loading && errorMessage == 'Erro ao Listar a sala' && 
+       <div className={styles['erro-listagem']}><img src={props.errorImg} alt="Error"/></div>}
+      {!loading && errorMessage != 'Erro ao Listar a sala' &&
       <>  
-      <HeaderAdm  isAuth={props.isAuth} setIsAuth={setIsAuth} error={props.error}
-          setError={props.setError} errorMessage={props.errorMessage} 
-          setErrorMessage={props.setErrorMessage} page={props.page}/>
       <div className={styles['table-salas-container']}>
       <Table className={styles['table-salas']}>
       <thead>

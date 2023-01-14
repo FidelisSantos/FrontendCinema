@@ -8,6 +8,14 @@ export function UpdateModal({...props}) {
                         descricao: string, imagem: string|File, id: number) {
     props.updateFilme(titulo, tempoDeFilme, genero, descricao, imagem, id )
   }
+  
+  function updateUrl(titulo: string, tempoDeFilme: number, 
+                        genero: number[],descricao: string, newImage:File){
+      props.updateUrl(titulo, tempoDeFilme, genero,descricao, newImage);
+    }
+  
+  
+
   function toogle() {
     props.toogle()
   }
@@ -16,7 +24,7 @@ export function UpdateModal({...props}) {
     <Modal isOpen = {props.isOpen}>
       <ModalHeader >Modal title</ModalHeader>
         <ModalBody>
-          <UpdateForm updateFilme={updateFilme} filme={props.filme} tags={props.tags}/>
+          <UpdateForm updateFilme={updateFilme} filme={props.filme} tags={props.tags} updateUrl={updateUrl}/>
         </ModalBody>
         <ModalFooter>
             <Button color="danger" onClick={toogle}>

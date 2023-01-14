@@ -5,33 +5,36 @@ import { tagService } from "../service/tagService";
 export function useTags() {
   const [loading, setLoading] = useState<boolean>(true);
   const [tags, setTags] = useState<TagType[]>([]);
-  const [error, setError] = useState('');
+  const [error, setError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
   const [isOpen, setIsOpen] = useState(false);
 
   const getTagsList = async () => {
-    setError('');
+    setErrorMessage('');
     const token = `Bearer ${localStorage.getItem('token')}`;
     if (token) { 
       const response = await tagService.getTag(token);
       console.log(response);
       if(response == 'Unauthorized') {
-        setError('token');
+        setErrorMessage('token');
         localStorage.removeItem('token');
         return;
       }
       else if(response == 'Error') {
-        setError('Erro ao Listar a sala');
+        setErrorMessage('Erro ao Listar a sala');
+        setError(true);
         return;
       }
       setTags(response)
     }
     else
-      setError('token');
+    setErrorMessage('token');
     setLoading(false);
   }
 
   const deleteTag = async (id:number) => {
-    setError('');
+    setErrorMessage('');
+    setError(false);
     setLoading(true);
     const token = `Bearer ${localStorage.getItem('token')}`;
     if (token) { 
@@ -39,20 +42,24 @@ export function useTags() {
       console.log(response);
       if(response == 'Unauthorized') {
         localStorage.removeItem('token');
-        setError('token');
+        setErrorMessage('token');
         setLoading(false);
-        return;
       }
       else if(!response) {
-        setError('Erro ao deletar a sala');
-        setLoading(false);
+        setErrorMessage('Erro ao deletar a tag');
+        setError(true);
+      } else if(response === true) {
+        getTagsList();
         return;
+      } else {
+        const messageError = response ? response as string :  'Erro ao deletar a tag';
+        setErrorMessage(messageError);
+        setError(true);
       }
-      getTagsList();
-      return;
+      setLoading(false);
     }
     else
-      setError('token');
+      setErrorMessage('token');
     setLoading(false);
   }
 
@@ -60,7 +67,7 @@ export function useTags() {
     const body:Partial<TagType> = {
       tag:newTag
     }
-    setError('');
+    setErrorMessage('');
     setLoading(true);
     const token = `Bearer ${localStorage.getItem('token')}`;
     if (token) { 
@@ -68,19 +75,23 @@ export function useTags() {
       console.log(response);
       if(response == 'Unauthorized') {
         localStorage.removeItem('token');
-        setError('token');
-      }else if(response) {
+        setErrorMessage('token');
+      }else if(response === true) {
         getTagsList();
+        return;
       }else if(!response){
-        setError('Erro ao deletar')
+        setErrorMessage('Erro ao criar tag');
+        setError(true);
       }
       else {
-        setError(response);
+        const messageError = response ? response as string :  'Erro ao deletar a criar tag';
+        setErrorMessage(messageError);
+        setError(true);
       }
       setLoading(false);
     }
     else
-      setError('token');
+    setErrorMessage('token');
     setLoading(false);
   }
 
@@ -88,7 +99,7 @@ export function useTags() {
     const body:Partial<TagType> = {
       tag:newTag
     }
-    setError('');
+    setErrorMessage('');
     setLoading(true);
     const token = `Bearer ${localStorage.getItem('token')}`;
     if (token) { 
@@ -96,22 +107,26 @@ export function useTags() {
       console.log(response);
       if(response == 'Unauthorized') {
         localStorage.removeItem('token');
-        setError('token');
-      }else if(response) {
+        setErrorMessage('token');
+      }else if(response === true) {
         getTagsList();
+        return;
       }else if(!response){
-        setError('Erro ao deletar')
+        setErrorMessage('Erro ao atualizar');
+        setError(true);
       }
       else {
-        setError(response);
+        const messageError = response ? response as string :  'Erro ao deletar ao atualizar tag';
+        setErrorMessage(messageError);
+        setError(true);
       }
       setLoading(false);
     }
     else
-      setError('token');
+    setErrorMessage('token');
     setLoading(false);
   }
 
-  return {loading, tags, error, setError, getTagsList, 
-          isOpen, setIsOpen, deleteTag, createTag, updateTag}
+  return {loading, tags, error, setError, getTagsList, isOpen, setIsOpen, 
+          deleteTag, createTag, updateTag, errorMessage, setErrorMessage}
 }

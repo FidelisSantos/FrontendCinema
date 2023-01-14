@@ -23,12 +23,17 @@ export function CardFilmes({...props}) {
 
   function removeFilme() {
     console.log('remove')
-    props.deleteFilme(props.filme.id);
+    props.deleteFilme(props.filme.id, props.filme.linkImagem);
   }
 
-  function updateFilme(titulo: string, tempoDeFilme: number, genero: number[],
-                          descricao: string, imagem: string|File, id: number) {
-    props.updateFilme(titulo, tempoDeFilme, genero, descricao, imagem, id)
+  function updateFilme(titulo: string, tempoDeFilme: number, genero: number[], descricao: string, imagem: string, id: number) {
+    props.updateFilme(titulo, tempoDeFilme, genero, descricao, imagem, id, props.filme.linkImagem);
+  } 
+
+  function updateUrl( titulo: string, tempoDeFilme: number, 
+                    genero: number[],descricao: string, newImage:File){
+        console.log( props.filme.id, titulo, tempoDeFilme, genero, descricao, props.filme.linkImagem, newImage) ;
+    props.updateUrl(props.filme.id, titulo, tempoDeFilme, genero, descricao, props.filme.linkImagem, newImage) ;
   }
 
   return (
@@ -44,7 +49,7 @@ export function CardFilmes({...props}) {
           </div>
           <CardText><strong>Tempo de Filme: </strong> {props.filme.tempoDeFilme} minutos</CardText>
           <CardSubtitle className={styles['card-subtitle']}><strong>Descrição:</strong></CardSubtitle>
-          <CardText>{props.filme.descricao} minutos</CardText>
+          <CardText>{props.filme.descricao}</CardText>
         </CardBody>
         <CardFooter className={styles['card-buttons']}>
           <Button color='none' className={styles['card-button-remove']} onClick={confirmDelete}>
@@ -55,7 +60,7 @@ export function CardFilmes({...props}) {
           <Button color='none' className={styles['card-button-edit']} onClick={toogle}>
             Editar
           </Button>
-          <UpdateModal isOpen={isOpen} toogle={toogle} updateFilme={updateFilme} filme={props.filme} tags={props.tags}/>
+          <UpdateModal isOpen={isOpen} toogle={toogle} updateFilme={updateFilme} updateUrl={updateUrl} filme={props.filme} tags={props.tags}/>
         </CardFooter>
       </Card>
     </div>

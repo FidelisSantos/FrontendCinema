@@ -10,33 +10,33 @@ import { PostSessaoType } from "../../../../types/postSessaoType";
 export function useSessao() {
   const [loading, setLoading] = useState<boolean>(true);
   const [sessoes, setSessoes] = useState<SessaoType[]>([]);
-  const [error, setError] = useState('');
+  const [error, setError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
   const [isOpen, setIsOpen] = useState(false);
   const [salas, setSalas] = useState<SalaType[]>([]);
   const [filmes, setFilmes] = useState<FilmeType[]>([]);
 
 
   const getSessoesList = async () => {
-    setError('');
+    setErrorMessage('');
     const token = `Bearer ${localStorage.getItem('token')}`;
     if (token) { 
       const response = await sessaoService.getSessao(token);
       console.log(response);
       if(response == 'Unauthorized') {
-        setError('token');
+        setErrorMessage('token');
         localStorage.removeItem('token');
         return;
       }
       else if(response == 'Error') {
-        setError('Erro ao Listar a sala');
-        return;
-      }
-      setSessoes(response);
+        setErrorMessage('Erro ao Listar as sessões');
+        setError(true);
+      } else setSessoes(response);
       await getSalaList();
       await getFilmesList();
     }
     else
-      setError('token');
+      setErrorMessage('token');
 
     setLoading(false);
   }
@@ -47,48 +47,39 @@ export function useSessao() {
       const response = await salaService.getSalaList(token);
       console.log(response);
       if(response == 'Unauthorized') {
-        setError('token');
+        setErrorMessage('token');
         return;
       }
       else if(response == 'Error') {
-        setError('Erro ao Listar a sala');
+        setErrorMessage('Erro ao Listar as sessões');
+        setError(true);
         return;
-      }
-      setSalas(response)
+      } else setSalas(response)
     }
-    else{
-      setError('token');
-      if(token)
-        localStorage.removeItem('token');
-    }
-      
-    setLoading(false);
+    else setErrorMessage('token');
   }
 
   const getFilmesList = async () => {
-    setError('');
     const token = `Bearer ${localStorage.getItem('token')}`;
     if (token) { 
       const response = await filmesService.getFilmes(token);
       console.log(response);
       if(response == 'Unauthorized') {
-        setError('token');
+        setErrorMessage('token');
         localStorage.removeItem('token');
-        return;
       }
       else if(response == 'Error') {
-        setError('Erro ao Listar a sala');
-        return;
-      }
-      setFilmes(response)
+        setErrorMessage('Erro ao Listar as sessões');
+        setError(true);
+      } else setFilmes(response)
     }
     else
-      setError('token');
+      setErrorMessage('token');
     }
 
 
   const deleteSessao = async (id:number) => {
-    setError('');
+    setErrorMessage('');
     setLoading(true);
     const token = `Bearer ${localStorage.getItem('token')}`;
     if (token) { 
@@ -96,20 +87,18 @@ export function useSessao() {
       console.log(response);
       if(response == 'Unauthorized') {
         localStorage.removeItem('token');
-        setError('token');
-        setLoading(false);
-        return;
+        setErrorMessage('token');
+      } else if(!response) {
+        setErrorMessage('Erro ao deletar sessão');
+        setError(true);
+      } else if(response === true ) {
+        getSessoesList();
+      } else {
+        const messageError = response ? response as string :  'Erro ao deletar sessão';
+        setErrorMessage(messageError);
+        setError(true);
       }
-      else if(!response) {
-        setError('Erro ao deletar a sala');
-        setLoading(false);
-        return;
-      }
-      getSessoesList();
-      return;
-    }
-    else
-      setError('token');
+    } else  setErrorMessage('token');
     setLoading(false);
   }
 
@@ -119,7 +108,7 @@ export function useSessao() {
       filmeId: filmeId,
       init: init
     }
-    setError('');
+    setErrorMessage('');
     setLoading(true);
     const token = `Bearer ${localStorage.getItem('token')}`;
     if (token) { 
@@ -127,19 +116,18 @@ export function useSessao() {
       console.log(response);
       if(response == 'Unauthorized') {
         localStorage.removeItem('token');
-        setError('token');
-      }else if(response) {
+        setErrorMessage('token');
+      }else if(response === true) {
         getSessoesList();
       }else if(!response){
-        setError('Erro ao deletar')
+        setErrorMessage('Erro ao criar sessão');
+        setError(true);
+      } else {
+        const messageError = response ? response as string :  'Erro ao criar sessão';
+        setErrorMessage(messageError);
+        setError(true);
       }
-      else {
-        setError(response);
-      }
-      setLoading(false);
-    }
-    else
-      setError('token');
+    } else setErrorMessage('token');
     setLoading(false);
   }
 
@@ -149,7 +137,7 @@ export function useSessao() {
       filmeId: filmeId,
       init: init
     }
-    setError('');
+    setErrorMessage('');
     setLoading(true);
     const token = `Bearer ${localStorage.getItem('token')}`;
     if (token) { 
@@ -157,23 +145,22 @@ export function useSessao() {
       console.log(response);
       if(response == 'Unauthorized') {
         localStorage.removeItem('token');
-        setError('token');
-      }else if(response) {
+        setErrorMessage('token');
+      }else if(response === true) {
         getSessoesList();
       }else if(!response){
-        setError('Erro ao deletar')
+        setErrorMessage('Erro ao atualizar sessão');
+        setError(true);
+      } else {
+        const messageError = response ? response as string :  'Erro ao criar sessão';
+        setErrorMessage(messageError);
+        setError(true);
       }
-      else {
-        setError(response);
-      }
-      setLoading(false);
-    }
-    else
-      setError('token');
+    } else setErrorMessage('token');
     setLoading(false);
   }
 
 
-  return { loading, sessoes, error, setError, getSessoesList, isOpen, 
-          setIsOpen, deleteSessao, salas, filmes, createSessao, updateSessao }
+  return { loading, sessoes, error, setError, getSessoesList, isOpen, setIsOpen, deleteSessao,
+           salas, filmes, createSessao, updateSessao, errorMessage, setErrorMessage }
 }

@@ -1,3 +1,21 @@
+.alert-container{
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  position: absolute;
+}
+
+.erro-listagem{
+  display: flex;
+  font-size: 15rem;
+  justify-content: center;
+  margin-top: 10%;
+}
+
+.erro-listagem img{
+  width: 400px;
+}
+
 .loader-container {
   display: flex;
   justify-content: center;
@@ -20,15 +38,13 @@
 }
 
 .filmes-container{
-  display: flex;
-  justify-content: start;
+  display: grid;
+  grid-template-columns: 30% 30% 30%;
+  justify-content: center;
   width: 100%;
   height: calc(100vh - 66px - 56px);
   background: rgb(2,0,36);
   background: linear-gradient(90deg, rgb(150, 150, 153) 0%, rgb(90, 89, 89) 35%, rgb(189, 189, 189) 100%);
   overflow: auto;
-  stroke-width: auto;
-  scrollbar-color: rgb(255, 0, 76) rgb(197, 1, 34);
-  scrollbar-base-color: rgb(255, 0, 43);
 }
 

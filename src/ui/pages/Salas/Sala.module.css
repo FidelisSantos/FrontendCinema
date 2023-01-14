@@ -1,3 +1,22 @@
+.alert-container{
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  position: absolute;
+}
+
+.erro-listagem{
+  display: flex;
+  font-size: 15rem;
+  justify-content: center;
+  margin-top: 10%;
+}
+
+.erro-listagem img{
+  width: 400px;
+}
+
+
 .loader-container {
   display: flex;
   justify-content: center;

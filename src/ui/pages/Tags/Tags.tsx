@@ -3,19 +3,20 @@ import { HeaderAdm } from "../../components/navbar/HeaderAdm/HeaderAdm";
 import { useTags } from './hooks/useTags';
 import styles from './Tags.module.css';
 import { Navigate } from "react-router-dom";
-import { VscAdd, VscSettingsGear } from "react-icons/vsc";
+import { VscAdd } from "react-icons/vsc";
 import { Table } from "reactstrap";
 import { ListTags } from '../../components/table/ListTags/ListTags';
 import { useEffect } from "react";
 import { CreateTag } from '../../components/modal/Tags/CreateTag/CreateTag';
+import { AlertError } from "../../components/alert/Alert";
 
 export function Tags({...props}) {
-  const {loading, tags, error, setError, getTagsList, 
-        isOpen, setIsOpen, deleteTag, createTag, updateTag} = useTags();
+  const {loading, tags, error, setError, getTagsList, isOpen, setIsOpen, 
+        deleteTag, createTag, updateTag, errorMessage, setErrorMessage} = useTags();
 
   useEffect(() => {
     if(!localStorage.getItem('token')) {
-      setError('token');
+      setErrorMessage('token');
     }
 
     props.setPage('tags');
@@ -32,11 +33,21 @@ export function Tags({...props}) {
     props.setIsAuth(false);
   }
 
+  if(error){
+    const errorTimeOut = setInterval(() =>{
+      setError(false);
+      clearInterval(errorTimeOut);
+    }, 5000);
+  }
+
   return (
     <>
       <HeaderAdm  isAuth={props.isAuth} setIsAuth={setIsAuth} error={props.error}
           setError={props.setError} errorMessage={props.errorMessage} 
           setErrorMessage={props.setErrorMessage} page={props.page}/>
+      <div className={styles['alert-container']}>
+            <AlertError error={error} setError={setError} errorMessage={errorMessage}/>
+      </div>
       {loading && 
           <div className={styles['loader-container']}>
               <ThreeCircles 
@@ -51,10 +62,11 @@ export function Tags({...props}) {
                 innerCircleColor=""
                 middleCircleColor=""/>
           </div>}
-      {!loading && error =='token' ||!localStorage.getItem('token') &&  
+      {!loading && errorMessage =='token' ||!localStorage.getItem('token') &&  
         <Navigate  to={'/'} state={props.setIsAuth(false)}/>}
-      {!loading && error == 'Erro ao Listar as tags' && <VscSettingsGear/>}
-      {!loading && !error &&
+      {!loading && errorMessage == 'Erro ao Listar as tags' && 
+        <div className={styles['erro-listagem']}><img src={props.errorImg} alt="Error"/></div>}
+      {!loading && errorMessage != 'Erro ao Listar as tags' &&
         <>  
         <div className={styles['table-tags-container']}>
         <Table className={styles['table-tags']}>

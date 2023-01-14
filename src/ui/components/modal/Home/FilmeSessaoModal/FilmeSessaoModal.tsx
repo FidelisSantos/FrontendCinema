@@ -4,7 +4,7 @@ import { HomeModalBodySessao } from './FilmeSessaoModalStatus/FilmeSessaoModalSt
 import styles from './FilmeSessaoModal.module.css';
 import { SessaoFilmeSessao } from '../../../../../types/sessaoFilmeSessaoType';
 
-export function FilmeSessaoModal({...props}, sessoes: SessaoFilmeSessao[]) {
+export function FilmeSessaoModal({...props}) {
 
   console.log(props.sessoes);
   
