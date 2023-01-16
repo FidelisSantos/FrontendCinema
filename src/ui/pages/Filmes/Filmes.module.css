@@ -40,10 +40,8 @@
 .filmes-container{
   display: grid;
   grid-template-columns: 30% 30% 30%;
-  justify-content: center;
   width: 100%;
   height: calc(100vh - 66px - 56px);
-  background: rgb(2,0,36);
   background: linear-gradient(90deg, rgb(150, 150, 153) 0%, rgb(90, 89, 89) 35%, rgb(189, 189, 189) 100%);
   overflow: auto;
 }

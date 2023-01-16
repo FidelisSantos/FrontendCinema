@@ -4,7 +4,7 @@
   max-width: 100%;
   overflow: hidden;
   justify-content: center;
-  align-items: last baseline;
+  align-items: baseline;
   text-align: center;
   height: calc(100vh - 66px - 56px);
 }
