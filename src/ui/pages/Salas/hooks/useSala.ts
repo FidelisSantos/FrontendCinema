@@ -14,15 +14,11 @@ export function useSala() {
       const response = await salaService.getSalaList(token);
       if(response == 'Unauthorized') {
         setErrorMessage('token');
-        return;
       }
       else if(response == 'Error') {
         setErrorMessage('Erro ao Listar a sala');
         setError(true)
-        setLoading(false);
-        return;
-      }
-      setSalas(response)
+      }else setSalas(response)
     }
     else{
       setErrorMessage('token');
@@ -59,7 +55,7 @@ export function useSala() {
       }
     }
     else
-    setErrorMessage('token');
+      setErrorMessage('token');
     setLoading(false);
   }
 

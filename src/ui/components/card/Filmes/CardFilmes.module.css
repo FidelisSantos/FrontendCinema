@@ -1,12 +1,8 @@
 .card-container {
   display: flex;
-  width: 100%;
-  max-width: 100%;
-  overflow: hidden;
   justify-content: center;
-  align-items: baseline;
   text-align: center;
-  height: calc(100vh - 66px - 56px);
+  height: 100%;
 }
 
 .card-header{
@@ -22,6 +18,19 @@
   background-color: black;
   color: white;
   overflow-y: auto;
+}
+
+.card::-webkit-scrollbar{
+  visibility: hidden;
+  background-color: white;
+  width: 1px;
+  height: 1px;
+}
+
+.card::-webkit-scrollbar-thumb{
+  background-color: white;
+  width: 0px;
+  height: 1px;
 }
 
 .card-img {

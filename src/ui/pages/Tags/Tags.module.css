@@ -33,6 +33,15 @@
 .tags-container {
   overflow-y:auto;
   overflow-x: hidden;
+  height: 100vh; 
+}
+
+.tags-container::-webkit-scrollbar{
+  width: 5px;
+  background-color: black;
+}
+.tags-container::-webkit-scrollbar-thumb{
+  background: gray;
 }
 
 .table-tags-container{
@@ -40,8 +49,9 @@
   display: flex;
   text-align: center;
   width: 100%;
-  background: rgb(2,0,36);
   background: linear-gradient(90deg, rgb(150, 150, 153) 0%, rgb(90, 89, 89) 35%, rgb(189, 189, 189) 100%);
+  overflow-y:auto;
+  overflow-x: hidden;
 }
 
 .search-container{
