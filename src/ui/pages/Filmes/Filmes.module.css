@@ -83,7 +83,8 @@
   justify-content: center;
   height: calc(100vh - 70px - 40px);
   background: linear-gradient(90deg, rgb(150, 150, 153) 0%, rgb(90, 89, 89) 35%, rgb(189, 189, 189) 100%);
-  overflow-x: auto;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
 .filmes-container::-webkit-scrollbar{
