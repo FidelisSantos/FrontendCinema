@@ -30,9 +30,9 @@ export function LoginModal({...props}) {
             name="email" 
             placeholder="Digite o Email"
             value={email}
-            onChange={(e) => {
+            onChange={(e) =>
               setEmail(e.target.value)
-            console.log(e.target.value)}}
+            }
             className={styles['login-modal-input']}
             invalid={props.errorLogin}/>
           </FormGroup>
@@ -48,7 +48,7 @@ export function LoginModal({...props}) {
             className={styles['login-modal-input']} 
             invalid={props.errorLogin}/>
           </FormGroup>
-          <Button className={styles['modal-header-button']} onClick={loginAdm}>Submit</Button>
+          <Button className={styles['modal-header-button']} onClick={loginAdm}>Logar</Button>
           <Button className={styles['modal-header-button']} color='danger' onClick={toggle}>Sair</Button>  
         </Form>
       </ModalBody>

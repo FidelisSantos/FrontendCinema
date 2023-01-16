@@ -14,7 +14,6 @@ export function useTags() {
     const token = `Bearer ${localStorage.getItem('token')}`;
     if (token) { 
       const response = await tagService.getTag(token);
-      console.log(response);
       if(response == 'Unauthorized') {
         setErrorMessage('token');
         localStorage.removeItem('token');
@@ -39,7 +38,6 @@ export function useTags() {
     const token = `Bearer ${localStorage.getItem('token')}`;
     if (token) { 
       const response = await tagService.deleteTag(id, token);
-      console.log(response);
       if(response == 'Unauthorized') {
         localStorage.removeItem('token');
         setErrorMessage('token');
@@ -72,7 +70,6 @@ export function useTags() {
     const token = `Bearer ${localStorage.getItem('token')}`;
     if (token) { 
       const response = await tagService.createTag(token, body);
-      console.log(response);
       if(response == 'Unauthorized') {
         localStorage.removeItem('token');
         setErrorMessage('token');
@@ -104,7 +101,6 @@ export function useTags() {
     const token = `Bearer ${localStorage.getItem('token')}`;
     if (token) { 
       const response = await tagService.updateTag(token, body, id);
-      console.log(response);
       if(response == 'Unauthorized') {
         localStorage.removeItem('token');
         setErrorMessage('token');

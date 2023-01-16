@@ -17,23 +17,21 @@ export function CardFilmes({...props}) {
   }
 
   function toogle() {
-    console.log('toogle')
     setIsOpen(!isOpen);
   }
 
   function removeFilme() {
-    console.log('remove')
     props.deleteFilme(props.filme.id, props.filme.linkImagem);
   }
 
-  function updateFilme(titulo: string, tempoDeFilme: number, genero: number[], descricao: string, imagem: string, id: number) {
-    props.updateFilme(titulo, tempoDeFilme, genero, descricao, imagem, id, props.filme.linkImagem);
+  function updateFilme(titulo: string, tempoDeFilme: number, genero: number[], 
+                      descricao: string, imagem: string, classificacao: string) {
+    props.updateFilme(titulo, tempoDeFilme, genero, descricao, imagem, props.filme.id, props.filme.linkImagem, classificacao);
   } 
 
-  function updateUrl( titulo: string, tempoDeFilme: number, 
-                    genero: number[],descricao: string, newImage:File){
-        console.log( props.filme.id, titulo, tempoDeFilme, genero, descricao, props.filme.linkImagem, newImage) ;
-    props.updateUrl(props.filme.id, titulo, tempoDeFilme, genero, descricao, props.filme.linkImagem, newImage) ;
+  function updateUrl( titulo: string, tempoDeFilme: number, genero: number[],
+                      descricao: string, newImage:File, classificacao: string){
+    props.updateUrl(props.filme.id, titulo, tempoDeFilme, genero, descricao, props.filme.linkImagem, newImage, classificacao) ;
   }
 
   return (
@@ -48,6 +46,7 @@ export function CardFilmes({...props}) {
                 <p key={tag.id} className={styles['card-tags-text']}>{tag.tag}</p>)}</CardText>
           </div>
           <CardText><strong>Tempo de Filme: </strong> {props.filme.tempoDeFilme} minutos</CardText>
+          <CardText><strong>Classificação:</strong> {props.filme.classificacao}</CardText>
           <CardSubtitle className={styles['card-subtitle']}><strong>Descrição:</strong></CardSubtitle>
           <CardText>{props.filme.descricao}</CardText>
         </CardBody>

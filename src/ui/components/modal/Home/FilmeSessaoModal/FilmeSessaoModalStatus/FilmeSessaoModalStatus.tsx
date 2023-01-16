@@ -4,7 +4,6 @@ import { SessaoFilmeSessao } from "../../../../../../types/sessaoFilmeSessaoType
 
 export function HomeModalBodySessao(props:SessaoFilmeSessao) {
   const inicio = new Date(props.inicio);
-  console.log(props.salaId);
   return(
     <div key={props.sessaoId}>
       <strong>Sala {props.salaId}: </strong> 

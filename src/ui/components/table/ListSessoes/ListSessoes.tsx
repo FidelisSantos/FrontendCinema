@@ -9,7 +9,6 @@ export function ListSessoes({...props}){
   const [isOpen, setIsOpen] = useState(false);
   const [isOpenConfirmation, setIsOpenConfirmation] = useState(false);
   const [message, setMessage] = useState('');
-  console.log(props.sessao.init, props.sessao.finish);
   const inicio = new Date(props.sessao.init);
   const fim = new Date(props.sessao.finish);
 

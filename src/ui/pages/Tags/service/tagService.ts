@@ -7,17 +7,14 @@ export const tagService = {
     const tags = 
       await api.get<TagType[]>('tags', { headers:{ Authorization: token} })
             .then((response) => {
-            console.log(response.config)
-             return response.data
+             return response.data;
             })
             .catch((error:AxiosError) => {
-            console.log(error.response, 'get')
             if (error.response && error.response.status === 401) 
               return 'Unauthorized';
             else 
               return 'Error';
             });
-          console.log(tags);
           return tags;
   },
 
@@ -38,11 +35,9 @@ export const tagService = {
   },
 
   createTag: async (token: string, body: Partial<TagType>) => {
-    console.log(body);
     const Create = await api.post(`tags`, body, { headers: {Authorization: token}})
       .then(() => true)
       .catch((error) => {
-        console.log(error.response,'delete')
         if (error.response && error.response.status === 401) 
               return 'Unauthorized';
         else if (error.response && error.response.status === 500)
@@ -55,11 +50,9 @@ export const tagService = {
   },
 
   updateTag: async (token: string, body: Partial<TagType>, id: number) => {
-    console.log(body);
     const Create = await api.patch(`tags/${id}`, body, { headers: {Authorization: token}})
       .then(() => true)
       .catch((error) => {
-        console.log(error.response,'delete')
         if (error.response && error.response.status === 401) 
               return 'Unauthorized';
         else {

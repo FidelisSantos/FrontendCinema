@@ -22,7 +22,6 @@ export function useSessao() {
     const token = `Bearer ${localStorage.getItem('token')}`;
     if (token) { 
       const response = await sessaoService.getSessao(token);
-      console.log(response);
       if(response == 'Unauthorized') {
         setErrorMessage('token');
         localStorage.removeItem('token');
@@ -45,7 +44,6 @@ export function useSessao() {
     const token = `Bearer ${localStorage.getItem('token')}`;
     if (token) { 
       const response = await salaService.getSalaList(token);
-      console.log(response);
       if(response == 'Unauthorized') {
         setErrorMessage('token');
         return;
@@ -63,7 +61,6 @@ export function useSessao() {
     const token = `Bearer ${localStorage.getItem('token')}`;
     if (token) { 
       const response = await filmesService.getFilmes(token);
-      console.log(response);
       if(response == 'Unauthorized') {
         setErrorMessage('token');
         localStorage.removeItem('token');
@@ -84,7 +81,6 @@ export function useSessao() {
     const token = `Bearer ${localStorage.getItem('token')}`;
     if (token) { 
       const response = await sessaoService.deleteSessao(id, token);
-      console.log(response);
       if(response == 'Unauthorized') {
         localStorage.removeItem('token');
         setErrorMessage('token');
@@ -113,7 +109,6 @@ export function useSessao() {
     const token = `Bearer ${localStorage.getItem('token')}`;
     if (token) { 
       const response = await sessaoService.createSessao(token, body);
-      console.log(response);
       if(response == 'Unauthorized') {
         localStorage.removeItem('token');
         setErrorMessage('token');
@@ -142,7 +137,6 @@ export function useSessao() {
     const token = `Bearer ${localStorage.getItem('token')}`;
     if (token) { 
       const response = await sessaoService.updateSessao(token, body, id);
-      console.log(response);
       if(response == 'Unauthorized') {
         localStorage.removeItem('token');
         setErrorMessage('token');

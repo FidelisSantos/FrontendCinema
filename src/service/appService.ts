@@ -10,7 +10,6 @@ export const appService = {
       console.error(error.message)
       return "";
     })
-    console.log(token, 'teste');
     return token;
 
   } 

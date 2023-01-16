@@ -38,7 +38,6 @@ export function useSala() {
     const token = `Bearer ${localStorage.getItem('token')}`;
     if (token) { 
       const response = await salaService.postSala(token);
-      console.log(response);
       if(response == 'Unauthorized') {
         setErrorMessage('token');
         setLoading(false);
@@ -69,7 +68,6 @@ export function useSala() {
     const token = `Bearer ${localStorage.getItem('token')}`;
     if (token) { 
       const response = await salaService.deleteSala(token, id);
-      console.log(response);
       if(response == 'Unauthorized') {
         setErrorMessage('token');
         setLoading(false);

@@ -5,8 +5,6 @@ import styles from './FilmeSessaoModal.module.css';
 import { SessaoFilmeSessao } from '../../../../../types/sessaoFilmeSessaoType';
 
 export function FilmeSessaoModal({...props}) {
-
-  console.log(props.sessoes);
   
   function toggleModal() {
     props.toggleModal();
@@ -17,7 +15,7 @@ export function FilmeSessaoModal({...props}) {
     <ModalBody>
       <fieldset>
         <legend className={styles['legend-text']}>Descrição:</legend>
-        {props.filme.descricao}
+        <div className={styles['descricao-container']}>{props.filme.descricao}</div>
       </fieldset>
       <fieldset>
         <legend className={styles['legend-text']}>Próximas Sessoes:</legend>

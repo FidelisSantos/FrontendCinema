@@ -3,5 +3,6 @@ export type PostFilmeType = {
   linkImagem: string;
   descricao: string;
   tempoDeFilme: number;
+  classificacao: string;
   tags: number[];
 }

@@ -10,7 +10,6 @@ export function ListGenero({...props}) {
     else 
       props.genero.push(tagId);
     props.setGenero(props.genero)
-    console.log(props.genero)
   }
 
   return(

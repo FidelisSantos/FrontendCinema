@@ -6,5 +6,6 @@ export type FilmeType = {
   linkImagem: string;
   descricao: string;
   tempoDeFilme: number;
+  classificacao: string;
   tags: TagType[];
 }

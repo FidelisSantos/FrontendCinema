@@ -3,6 +3,7 @@ import { FormEvent, useState } from 'react';
 import { ListGenero } from './ListGenero/ListGenero';
 import styles from './CreateForm.module.css';
 import { TagType } from '../../../../../types/tagType';
+import { classificacaoList } from '../../../../pages/Filmes/classificacaoList/classificacaoList';
 
 
 
@@ -16,6 +17,7 @@ export function CreateForm({...props}) {
   const [fileImg, setFileImg] = useState<File>();
   const [linkImg, setLinkImg] = useState('');
   const [genero, setGenero] = useState<number[]>([]);
+  const [classificacao, setClassificacao] = useState('');
 
 
   
@@ -32,30 +34,29 @@ export function CreateForm({...props}) {
     calcMinutes(value);
   }
 
+  function getClassificacao(e: FormEvent<HTMLInputElement>) {
+    setClassificacao(e.currentTarget.value);
+  }
+  
   function calcMinutes(hour: string){
     const hourMinutes = hour.split(":");
     const minutes = ((+hourMinutes[0]*60) + (+hourMinutes[1]));
-    console.log(minutes);
     setTempoFilme(minutes);
   }
 
   async function createFilme(e: FormEvent<HTMLFormElement>) {
     e.preventDefault()
-    let imagem
-    console.log(fileImg as File);
     if(fileImg || !linkImg ) {
       createUrl(e);
     } else{
-      imagem = linkImg
-      props.createFilme(titulo, tempoFilme, genero, descricao, imagem)
+      props.createFilme(titulo, tempoFilme, genero, descricao, linkImg, classificacao)
     } 
   }
 
   async function createUrl(e: FormEvent<HTMLFormElement>) {
     const formData = new FormData(e.currentTarget);
     const file = formData.get('imageFile') as File;
-    console.log(file);
-    props.createUrl(file, titulo, tempoFilme, genero, descricao);
+    props.createUrl(file, titulo, tempoFilme, genero, descricao, classificacao);
   }
   
   return (
@@ -65,9 +66,9 @@ export function CreateForm({...props}) {
       <Input 
         type="text"  
         placeholder="Informe o titulo" 
-        onChange={(e) => {
+        onChange={(e) => 
           setTitulo(e.target.value)
-          console.log(titulo, e.target.value)}}
+         }
         value={titulo}
         required
         />
@@ -75,8 +76,7 @@ export function CreateForm({...props}) {
     <FormGroup>
       <Label>Tempo de Filme</Label>
       <Input type="time" 
-      inputMode="numeric"
-      placeholder="Informe o tempo do filme em minutos(ex 01:50)"
+      placeholder="Informe o tempo do filme(ex 01:50)"
       id='tempoFilme'
       onChange={maskHours}
       value={hourMinute}
@@ -94,14 +94,24 @@ export function CreateForm({...props}) {
       <Input
         type="textarea" 
         placeholder="Informe a descrição" 
-        onChange={(e) => {
+        onChange={(e) => 
           setDescricao(e.target.value)
-          console.log(descricao, e.target.value)}}
+          }
         value={descricao}
         required/>
     </FormGroup>
     <FormGroup>
-      <Label for="exampleFile">Imagem do filme</Label>
+    <div className={styles['modal-select-sala']}>
+      <Label>Classificação</Label>
+      <Input type="select" onChange={getClassificacao} defaultValue={0}>
+        <option value="0"></option>
+        {classificacaoList.map((classificacao)=> 
+        <option key={classificacao} value={classificacao}>{classificacao}</option>)}
+      </Input>
+    </div>
+    </FormGroup>
+    <FormGroup>
+      <Label>Imagem do filme</Label>
       <Input 
         type="file"
         disabled={linkImg ? true: false} 
@@ -114,9 +124,9 @@ export function CreateForm({...props}) {
       <Input 
         type="url" 
         disabled={fileImg ? true: false}
-        onChange={(e: any) => {
+        onChange={(e: any) =>
           setLinkImg(e.target.value)
-          console.log(linkImg, e.target.value)}}
+          }
         value={linkImg}
         placeholder='Link da Imagem'
         required={fileImg ? false: true}
@@ -125,7 +135,7 @@ export function CreateForm({...props}) {
         Favor colocar arquivo da imagem ou link da imagem
       </FormText>
     </FormGroup>
-    <Button type="submit">Cadastrar</Button>
+    <Button className={styles['modal-button']} type="submit">Cadastrar</Button>
   </Form>
   )
 }

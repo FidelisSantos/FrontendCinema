@@ -16,16 +16,15 @@ export function CreateSessao({...props}) {
   function confirmSessao() {
     if(calcFinish() != null){
       if(calcFinish()){
-        console.log('entrei abrir modal')
         setMessage(`A sessão irá terminar depois das 23h`);
         setIsOpenConfirmation(true);
         return
-      }
-      createSessao()
+      } else createSessao()
       
+    } else{
+      setMessage(`Favor colocar novamente horário de inicio`);
+      setIsOpenConfirmation(true);
     }
-    return
-    
   }
 
 
@@ -37,12 +36,10 @@ export function CreateSessao({...props}) {
 
   function calcFinish() {
     const filme = getFilme();
-    console.log(dateTime);
     if(filme){
       if(dateTime){
         const hourFinish = 
           new Date(dateTime.getTime() + (filme.tempoDeFilme * 60000));
-        console.log(hourFinish);
         if(hourFinish.getHours() > 22 || hourFinish.getDate() != dateTime.getDate())
           return true;
         return false;
@@ -63,12 +60,10 @@ export function CreateSessao({...props}) {
 
   function getFilmeId(e: FormEvent<HTMLInputElement>) {
     setFilmeId(+e.currentTarget.value)
-    console.log(filmeId, +e.currentTarget.value)
   }
 
   function getSalaId(e: FormEvent<HTMLInputElement>) {
     setSalaId(+e.currentTarget.value)
-    console.log(salaId,+e.currentTarget.value )
   }
 
   function toogle() {
@@ -76,11 +71,9 @@ export function CreateSessao({...props}) {
   }
 
   function getInit(e:FormEvent<HTMLInputElement>) {
-    console.log(e.currentTarget.value)
     const date = new Date(e.currentTarget.value);
     setDateTime(date);
     setInit(date.toISOString());
-    console.log(date);
   }
 
   return (

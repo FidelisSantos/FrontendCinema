@@ -24,7 +24,6 @@ export function Sessao({...props}) {
         await getSessoesList();
       }
       listSessoes();
-      console.log(sessoes)
     },[]);
 
 

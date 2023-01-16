@@ -5,8 +5,7 @@ export const homeService = {
   getFilmesSessoes: async () => {
     const data = await api.get<FilmeSessaoType[]>('filmesessao')
     .then((response) => response.data)
-    .catch((error:Error) => {
-      console.error(error.message)
+    .catch(() => {
       return null;
     })
     return data;
@@ -15,8 +14,7 @@ export const homeService = {
   searchFilmesSessoes: async (search: string) => {
     const data = await api.get<FilmeSessaoType[]>('filmesessao',{params: {search: search}})
     .then((response) => response.data)
-    .catch((error:Error) => {
-      console.error(error.message)
+    .catch(() => {
       return [];
     })
     return data;

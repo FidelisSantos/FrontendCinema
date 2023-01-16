@@ -33,7 +33,6 @@ export function useHome() {
   }
 
   const searchFilmeSessao= (search: string) => {
-    console.log(search);
     if(!search){
       getFilmeSessoes();
       return;

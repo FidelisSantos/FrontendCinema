@@ -4,6 +4,7 @@ import styles from './UpdateForm.module.css';
 import { TagType } from '../../../../../types/tagType';
 import { useEffect } from 'react';
 import { ListGenero } from './ListGenero/ListGenero';
+import { classificacaoList } from '../../../../pages/Filmes/classificacaoList/classificacaoList';
 
 
 
@@ -18,13 +19,13 @@ export function UpdateForm({...props}) {
   const [linkImg, setLinkImg] = useState(props.filme.linkImagem);
   const [genero, setGenero] = useState<number[]>([]);
   const [tempoFilmeAtual, setTempoFilmeAtual] = useState('');
+  const [classificacao, setClassificacao] = useState(props.filme.classificacao);
 
 useEffect(() =>{
   const formatteHour = () =>{
     const hour = Math.floor(tempoFilme/ 60);
     const min = tempoFilme % 60
     const hourMinutes = `${hour.toString()}:${min.toString()}`
-    console.log(hourMinutes);
 
     return hourMinutes
   }
@@ -41,26 +42,25 @@ useEffect(() =>{
   const formatteGenero = () => {
     const tagsId: number[] =[]
     for (let index = 0 ; index < props.filme.tags.length ; index++){
-      tagsId.push(props.filme.tags[index].id)
+      tagsId.push(props.filme.tags[index].id);
     }
-    console.log(tagsId);
     return  tagsId
   }
   setGenero(formatteGenero)
   
 }, [])
-  
-
+    
+  function getClassificacao(e: FormEvent<HTMLInputElement>) {
+      setClassificacao(e.currentTarget.value);
+    }
   function maskHours(e: FormEvent<HTMLInputElement>) {
     e.currentTarget.maxLength= 5
     let value = e.currentTarget.value;
     const verifyValue = value.split(':');
-    verifyValue[1] = +verifyValue[1] >= 60 ? '59': verifyValue[1];
+    verifyValue[1] = +verifyValue[1] >= 60 ? "59": verifyValue[1];
     value = verifyValue.toString();
-    console.log(value, 'valor');
     value = value.replace(/\D/g,'');
     value = value.replace(/^(\d{2})(\d)/,"$1:$2");
-    console.log(value, 'valor');
     setHourMinute(value);
     calcMinutes(value);
   }
@@ -68,7 +68,6 @@ useEffect(() =>{
   function calcMinutes(hour: string){
     const hourMinutes = hour.split(":");
     const minutes = ((+hourMinutes[0]*60) + (+hourMinutes[1]));
-    console.log(minutes);
     setTempoFilme(minutes);
   }
 
@@ -77,8 +76,7 @@ useEffect(() =>{
     if(fileImg) {
       updateUrl(e)
     }else {
-      console.log(titulo, tempoFilme, genero, descricao, linkImg);
-      props.updateFilme(titulo, tempoFilme, genero, descricao, linkImg, props.filme.id)
+      props.updateFilme(titulo, tempoFilme, genero, descricao, linkImg, classificacao)
     }
 
     
@@ -87,7 +85,7 @@ useEffect(() =>{
   function updateUrl(e: FormEvent<HTMLFormElement>){
     const formData = new FormData(e.currentTarget);
     const file = formData.get('imageFile') as File;
-    props.updateUrl(titulo, tempoFilme, genero,descricao, file);
+    props.updateUrl(titulo, tempoFilme, genero,descricao, file, classificacao);
   }
   
   return (
@@ -97,9 +95,9 @@ useEffect(() =>{
       <Input 
         type="text"  
         placeholder="Informe o titulo" 
-        onChange={(e: any) => {
+        onChange={(e: any) =>
           setTitulo(e.target.value)
-          console.log(titulo, e.target.value)}}
+         }
         value={titulo}
         required
         />
@@ -107,8 +105,7 @@ useEffect(() =>{
     <FormGroup>
       <Label>Tempo de Filme</Label>
       <Input type="time" 
-      inputMode="numeric"
-      placeholder="Informe o tempo do filme em minutos(ex 01:50)"
+      placeholder="Informe o tempo do filme(ex 01:50)"
       id='tempoFilme'
       onChange={maskHours}
       defaultValue={hourMinute}
@@ -130,14 +127,24 @@ useEffect(() =>{
       <Input
         type="textarea" 
         placeholder="Informe a descrição" 
-        onChange={(e: any) => {
+        onChange={(e: any) => 
           setDescricao(e.target.value)
-          console.log(descricao, e.target.value)}}
+         }
         value={descricao}
         required/>
     </FormGroup>
     <FormGroup>
-      <Label for="exampleFile">Imagem do filme</Label>
+    <div className={styles['modal-select-sala']}>
+      <Label>Classificação</Label>
+      <Input type="select" onChange={getClassificacao} defaultValue={props.filme.classificacao}>
+        <option value="0"></option>
+        {classificacaoList.map((classificacao)=> 
+        <option key={classificacao} value={classificacao}>{classificacao}</option>)}
+      </Input>
+    </div>
+    </FormGroup>
+    <FormGroup>
+      <Label>Imagem do filme</Label>
       <Input 
         type="file"
         disabled={linkImg ? true: false} 
@@ -161,7 +168,7 @@ useEffect(() =>{
         Favor colocar arquivo da imagem ou link da imagem
       </FormText>
     </FormGroup>
-    <Button type='submit'>Atualizar</Button>
+    <Button className={styles['modal-button']} type='submit'>Atualizar</Button>
   </Form>
   )
 }

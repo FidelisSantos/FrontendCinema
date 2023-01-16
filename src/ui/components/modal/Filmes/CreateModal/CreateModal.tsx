@@ -4,21 +4,23 @@ import { CreateForm } from "../../../form/Filmes/CreateForm/CreateForm";
 
 export function CreateModal({...props}) {
 
-  function createFilme(titulo: string, tempoDeFilme: number, genero: number[],descricao: string, imagem: string) {
-    props.createFilme(titulo, tempoDeFilme, genero, descricao, imagem)
+  function createFilme(titulo: string, tempoDeFilme: number, genero: number[],descricao: string, imagem: string,classificacao: string) {
+    props.createFilme(titulo, tempoDeFilme, genero, descricao, imagem, classificacao);
+    toogle()
   }
 
-  function createUrl(imagem: File, titulo: string, tempoDeFilme: number, genero: number[],descricao: string) {
-    props.createUrl(imagem, titulo, tempoDeFilme, genero, descricao);
+  function createUrl(imagem: File, titulo: string, tempoDeFilme: number, genero: number[],descricao: string, classificacao: string) {
+    props.createUrl(imagem, titulo, tempoDeFilme, genero, descricao, classificacao);
+    toogle();
   }
 
   function toogle() {
-    props.setIsOpen(false)
+    props.setIsOpen(false);
   }
 
   return (
-    <Modal isOpen = {props.isOpen}>
-      <ModalHeader >Modal title</ModalHeader>
+    <Modal isOpen={props.isOpen}>
+      <ModalHeader className={styles['modal-header']}>Criar Filme</ModalHeader>
         <ModalBody>
           <CreateForm tags={props.tags} createFilme={createFilme} createUrl={createUrl}/>
         </ModalBody>

@@ -18,18 +18,14 @@ export function UpdateSessao({...props}) {
   const fim = new Date(props.sessao.finish);
 
   async function confirmSessao() {
-  await setDateTime( dateTime? dateTime: inicio);
-   await setFilmeId(filmeId ? filmeId :props.sessao.filme.id);
+  setDateTime( dateTime? dateTime: inicio);
+  setFilmeId(filmeId ? filmeId :props.sessao.filme.id);
     const validationHour = calcFinish();
-    console.log(validationHour)
     if(validationHour != null){
       if(validationHour){
-        console.log('entrei abrir modal')
         setMessage(`A sessão irá terminar depois das 23h`);
         setIsOpenConfirmation(true);
-        return
-      }
-      updateSessao()
+      } else updateSessao()
     }
     return
   }
@@ -41,8 +37,6 @@ export function UpdateSessao({...props}) {
     const sala = salaId ? salaId: props.sessao.sala.id as number;
     const filme = filmeId ? filmeId: props.sessao.filme.id as number;
     const initSessao = init ? init: props.sessao.init;
-    console.log('entrei')
-    console.log(sala, filme, initSessao)
     props.updateSessao(sala,filme, initSessao);
   }
 
@@ -54,7 +48,6 @@ export function UpdateSessao({...props}) {
       if(date){
         const hourFinish = 
           new Date(date.getTime() + (filme.tempoDeFilme * 60000));
-        console.log(hourFinish);
         if(hourFinish.getHours() > 22 || hourFinish.getDate() != date.getDate())
           return true;
         return false;
@@ -65,7 +58,6 @@ export function UpdateSessao({...props}) {
 
   function getFilme(){
     let filme;
-    console.log(filmeId)
     for (let index = 0; index < props.filmes.length; index++) {
       if(props.filmes[index].id ===filmeId){
         filme = props.filmes[index];
@@ -75,13 +67,11 @@ export function UpdateSessao({...props}) {
   }
 
   function getFilmeId(e: FormEvent<HTMLInputElement>) {
-    console.log(filmeId, +e.currentTarget.value)
-    setFilmeId(+e.currentTarget.value)
+    setFilmeId(+e.currentTarget.value);
   }
 
   function getSalaId(e: FormEvent<HTMLInputElement>) {
-    setSalaId(+e.currentTarget.value)
-    console.log(salaId,+e.currentTarget.value )
+    setSalaId(+e.currentTarget.value);
   }
 
   function toogle() {
@@ -89,11 +79,9 @@ export function UpdateSessao({...props}) {
   }
 
   function getInit(e:FormEvent<HTMLInputElement>) {
-    console.log(e.currentTarget.value)
     const date = new Date(e.currentTarget.value);
     setDateTime(date);
     setInit(date.toISOString());
-    console.log(date);
   }
 
   return (
@@ -122,7 +110,7 @@ export function UpdateSessao({...props}) {
               <Label>Hora e Data de Inicio</Label>
               <Input type="datetime-local" onChange={getInit}/>
               <FormText color="muted">
-              {`Sessão atual -> Inicio: ${inicio.toLocaleDateString()} - ${inicio.getHours() < 10 ? '0'+ inicio.getHours():inicio.getHours()}: ${inicio.getMinutes()< 10 ? '0'+ inicio.getMinutes():inicio.getMinutes()}  
+              {`Sessão atual-> Inicio: ${inicio.toLocaleDateString()} - ${inicio.getHours() < 10 ? '0'+ inicio.getHours():inicio.getHours()}: ${inicio.getMinutes()< 10 ? '0'+ inicio.getMinutes():inicio.getMinutes()} | 
                 Fim: ${fim.toLocaleDateString()} - ${fim.getHours() < 10 ? '0'+ fim.getHours():fim.getHours()}: ${fim.getMinutes()< 10 ? '0'+ fim.getMinutes():fim.getMinutes()}`}
               </FormText>
             </div>

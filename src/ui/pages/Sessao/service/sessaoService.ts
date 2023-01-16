@@ -8,17 +8,14 @@ export const sessaoService = {
     const listSessoes = 
       await api.get<SessaoType[]>('sessao',  { headers: {Authorization: token}})
          .then((response) => {
-          console.log(response.config)
-           return response.data
+           return response.data;
           })
           .catch((error:AxiosError) => {
-          console.log(error.response, 'get')
           if (error.response && error.response.status === 401) 
             return 'Unauthorized';
           else 
             return 'Error';
           });
-        console.log(listSessoes);
         return listSessoes;
   },
 
@@ -37,11 +34,9 @@ export const sessaoService = {
   },
 
   createSessao: async (token: string, body: PostSessaoType) => {
-    console.log(body);
     const Create = await api.post(`sessao`, body, { headers: {Authorization: token}})
       .then(() => true)
       .catch((error) => {
-        console.log(error.response,'delete')
         if (error.response && error.response.status === 401) 
               return 'Unauthorized';
         else if (error.response && error.response.status === 500) 
@@ -52,11 +47,9 @@ export const sessaoService = {
   },
 
   updateSessao: async (token: string, body: PostSessaoType, id: number) => {
-    console.log(body);
     const Create = await api.patch(`sessao/${id}`, body, { headers: {Authorization: token}})
       .then(() => true)
       .catch((error) => {
-        console.log(error.response,'delete')
         if (error.response && error.response.status === 401) 
               return 'Unauthorized';
         else if (error.response && error.response.status === 500) 

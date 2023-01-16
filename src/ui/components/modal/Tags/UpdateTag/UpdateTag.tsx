@@ -1,5 +1,6 @@
 import { Button, Form, FormGroup, Input, Label, Modal, ModalBody, ModalFooter, ModalHeader } from "reactstrap";
 import { useState } from 'react';
+import styles from "./UpdateTag.module.css";
 
 
 export function UpdateTag({...props}) {
@@ -14,7 +15,7 @@ export function UpdateTag({...props}) {
 
   return (
     <Modal isOpen = {props.isOpen}>
-      <ModalHeader >Modal title</ModalHeader>
+      <ModalHeader  className={styles['modal-header']}>Atualizar Tag</ModalHeader>
         <ModalBody>
         <Form >
           <FormGroup>
@@ -29,7 +30,7 @@ export function UpdateTag({...props}) {
               } 
                 }
               />
-            <Button onClick={updateTag}>Atualizar</Button>
+            <Button className={styles['modal-button']} onClick={updateTag}>Atualizar</Button>
           </FormGroup>
         </Form>
       </ModalBody>

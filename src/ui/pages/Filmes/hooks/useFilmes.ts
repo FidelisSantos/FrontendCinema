@@ -21,7 +21,6 @@ export function useFilmes() {
     const token = `Bearer ${localStorage.getItem('token')}`;
     if (token) { 
         const response = await filmesService.getFilmes(token);
-        console.log(response);
         if(response == 'Unauthorized') {
           setErrorMessage('token');
           localStorage.removeItem('token');
@@ -41,7 +40,6 @@ export function useFilmes() {
     const token = `Bearer ${localStorage.getItem('token')}`;
     if (token) { 
       const response = await tagService.getTag(token);
-      console.log(response);
       if(response == 'Unauthorized') {
         setErrorMessage('token');
         localStorage.removeItem('token');
@@ -65,7 +63,6 @@ export function useFilmes() {
     const token = `Bearer ${localStorage.getItem('token')}`;
     if (token) { 
       const response = await filmesService.deleteFilme(token, id);
-      console.log(response);
       if(response == 'Unauthorized') {
         localStorage.removeItem('token');
         setErrorMessage('token');
@@ -85,27 +82,38 @@ export function useFilmes() {
     }
     else
       setErrorMessage('token');
-    setLoading(false);
+      setLoading(false);
   }
 
   const createFilme = 
-    async (titulo: string, tempoDeFilme: number, genero: number[], 
-              descricao: string, imagem: string) => {
+    async (titulo: string, tempoDeFilme: number, tags: number[], 
+              descricao: string, imagem: string, classificacao: string) => {
       setErrorMessage('');
       setError(false);
       setLoading(true);
+      if (+classificacao == 0){
+        setErrorMessage('Favor escolher uma classificação');
+        setError(true);
+        setLoading(false);
+        return;
+      }
+      if (tags.length == 0){
+        setErrorMessage('Favor escolher as Tags');
+        setError(true);
+        setLoading(false);
+        return;
+      }
       const body : PostFilmeType = {
         titulo: titulo,
         linkImagem: imagem,
         descricao: descricao,
         tempoDeFilme: tempoDeFilme,
-        tags: genero,
+        classificacao: classificacao,
+        tags: tags,
       }
-      console.log(body, 'testando');
       const token = `Bearer ${localStorage.getItem('token')}`;
       if (token) { 
         const response = await filmesService.createFilme(token, body);
-        console.log(response);
         if(response == 'Unauthorized') {
           localStorage.removeItem('token');
           setErrorMessage('token');
@@ -127,29 +135,28 @@ export function useFilmes() {
   }
 
   const updateFilme = 
-    async (titulo: string, tempoDeFilme: number, genero: number[], 
-              descricao: string, imagem: string, id: number, oldImage: string) => {
+    async (titulo: string, tempoDeFilme: number, tags: number[], descricao: string, 
+          imagem: string, id: number, oldImage: string, classificacao: string) => {
       setErrorMessage('');
       setLoading(true);
-      await filmesService.deleteImageUrl(oldImage);
       const body : PostFilmeType = {
         titulo: titulo,
         linkImagem: imagem,
         descricao: descricao,
         tempoDeFilme: tempoDeFilme,
-        tags: genero
+        classificacao: classificacao,
+        tags: tags
       }
-      console.log(body);
       const token = `Bearer ${localStorage.getItem('token')}`;
       if (token) { 
         const response = await filmesService.patchFilme(token, body, id);
-        console.log(response);
         if(response == 'Unauthorized') {
           localStorage.removeItem('token');
           setErrorMessage('token');
         } else if(response === true) {
           getFilmesList();
-          return;
+          if(imagem !=oldImage)
+            await filmesService.deleteImageUrl(oldImage);
         } else if(!response) {
           setErrorMessage('Erro ao deletar');
           setError(true);
@@ -164,20 +171,31 @@ export function useFilmes() {
       setLoading(false);
   }
 
-  const createUrl = async (imagem: File, titulo: string, tempoDeFilme: number, genero: number[],descricao: string) => {
+  const createUrl = async (imagem: File, titulo: string, tempoDeFilme: number, tags: number[],descricao: string, classificacao: string) => {
         setError(false);
         setLoading(true);
+        if (+classificacao == 0){
+          setErrorMessage('Favor escolher uma classificação');
+          setError(true);
+          setLoading(false);
+          return;
+        }
+        if (tags.length == 0){
+          setErrorMessage('Favor escolher as Tags');
+          setError(true);
+          setLoading(false);
+          return;
+        }
       if(imagem && imagem.size > 0 && imagesTypes.includes(imagem.type)) {
         const firebaseId= uuidv4();
         const linkImagem = await filmesService.createFirebaseUrl(firebaseId, imagem);
-        console.log(linkImagem);
         if(linkImagem === 'Erro gerar Url') {
           setErrorMessage(linkImagem);
           setError(true);
           setLoading(false);
           return ;
         } 
-        await createFilme(titulo, tempoDeFilme, genero, descricao,linkImagem)
+        await createFilme(titulo, tempoDeFilme, tags, descricao,linkImagem, classificacao)
         return 
       }else {
         setErrorMessage('Arquivo inválido');
@@ -187,23 +205,20 @@ export function useFilmes() {
       }
   }
 
-  const updateUrl = async (id: number, titulo: string, tempoDeFilme: number, 
-                          genero: number[],descricao: string, oldImage: string, newImage:File) => {
-                            console.log('entrei 3');
+  const updateUrl = async (id: number, titulo: string, tempoDeFilme: number, tags: number[],
+                          descricao: string, oldImage: string, newImage:File, classificacao: string) => {                       
     setError(false);
     setLoading(true);
-    console.log(newImage, genero)
   if(newImage && newImage.size > 0 && imagesTypes.includes(newImage.type)) {
     const firebaseId= uuidv4();
     const linkImagem = await filmesService.createFirebaseUrl(firebaseId, newImage);
-    console.log(linkImagem);
     if(linkImagem === 'Erro gerar Url') {
       setErrorMessage(linkImagem);
       setError(true);
       setLoading(false);
       return ;
     } 
-    await updateFilme(titulo,tempoDeFilme,genero,descricao,linkImagem, id, oldImage)
+    await updateFilme(titulo,tempoDeFilme,tags,descricao,linkImagem, id, oldImage, classificacao)
     return 
   }else {
     setErrorMessage('Arquivo inválido');

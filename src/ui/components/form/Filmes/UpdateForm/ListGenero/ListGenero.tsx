@@ -15,7 +15,6 @@ export function ListGenero({...props}) {
     }
       
     props.setGenero(props.genero)
-    console.log(props.genero)
   }
 
   return(
