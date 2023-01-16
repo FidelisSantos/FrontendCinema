@@ -32,15 +32,15 @@ export function Home ({...props}) {
   }
 
   return (
-    <div className={styles['home-container']}>
-      {!localStorage.getItem('token') && <HeaderVisitor 
-      isAuth={props.isAuth} setIsAuth={setIsAuth} loginAdm={loginAdm}
-      errorLogin={props.errorLogin} setErrorLogin={setErrorLogin} />}
-      {localStorage.getItem('token') && <HeaderAdm 
-      isAuth={props.isAuth} setIsAuth={setIsAuth} loginAdm={loginAdm}
-      errorLogin={props.errorLogin} setErrorLogin={setErrorLogin} 
-      page={props.page}/>}
-       <div className={styles['alert-container']}>
+    <div>
+      <div className={styles['header-container']}>
+          {!localStorage.getItem('token') && <HeaderVisitor 
+          isAuth={props.isAuth} setIsAuth={setIsAuth} loginAdm={loginAdm}
+          errorLogin={props.errorLogin} setErrorLogin={setErrorLogin} />}
+          {localStorage.getItem('token') && <HeaderAdm 
+          isAuth={props.isAuth} setIsAuth={setIsAuth} loginAdm={loginAdm}
+          errorLogin={props.errorLogin} setErrorLogin={setErrorLogin} 
+          page={props.page}/>}
           <AlertError error={error} setError={setError} errorMessage={errorMessage}/>
         </div>
       {loading && 
@@ -60,32 +60,33 @@ export function Home ({...props}) {
       {!loading && errorMessage == 'Erro ao listar sessões' && 
        <div className={styles['erro-listagem']}><img src={props.errorImg} alt="Error"/></div>}
       {!loading && errorMessage != 'Erro ao listar sessões' && 
-      <>
-      <div className={styles['search-container']}>
-          <Input
-          className={styles['search-input']}
-          type="search"
-          onChange={(e: any) =>setSearch(e.currentTarget.value)}
-          disabled={isDisabled}
-          value={search}
-          placeholder="Pesquisa"/>
-          {!isDisabled && <Button className={styles['btn-search']}
-           onClick={()=> searchFilmeSessao(search)
-           }>Pesquisar</Button>}
-          {isDisabled && <Button className={styles['btn-reset']} 
-          onClick={() => {
-            getFilmeSessoes()
-            setSearch('')}}>Limpar</Button>}
+      <div className={styles['home-container']}>
+          <div className={styles['search-container']}>
+              <Input
+              className={styles['search-input']}
+              type="search"
+              onChange={(e: any) =>setSearch(e.currentTarget.value)}
+              disabled={isDisabled}
+              value={search}
+              placeholder="Pesquisa"/>
+              {!isDisabled && <Button className={styles['btn-search']}
+              onClick={()=> searchFilmeSessao(search)
+              }>Pesquisar</Button>}
+              {isDisabled && <Button className={styles['btn-reset']} 
+              onClick={() => {
+                getFilmeSessoes()
+                setSearch('')}}>Limpar</Button>}
       </div>
-        {errorMessage != 'Nenhum filme encontrado' && <div className={styles['card-container']}>
-          {filmeSessoes!=null && filmeSessoes.map((filmeSessao) => 
-            <div key={filmeSessao.filme.id}><CardFilmes {...filmeSessao} /></div>)}
-        </div>}
+        {errorMessage != 'Nenhum filme encontrado' && 
+          <div className={styles['card-container']}>
+            {filmeSessoes!=null && filmeSessoes.map((filmeSessao) => 
+              <div key={filmeSessao.filme.id}><CardFilmes {...filmeSessao} /></div>)}
+          </div>}
         {errorMessage == 'Nenhum filme encontrado' &&
           <h1 className={styles['error-search']}>{errorMessage}</h1>}
         {errorMessage == 'Não há filmes em cartaz' &&
           <h1 className={styles['error-search']}>{errorMessage}</h1>}
-      </>}
+      </div>}
     </div>
     )
 }

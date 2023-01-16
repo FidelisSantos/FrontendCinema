@@ -1,8 +1,16 @@
+.header-container{
+  position: fixed;
+  width: 100%;
+  height: 66px;
+  top:0;
+}
+
 .alert-container{
   display: flex;
   justify-content: center;
   width: 100%;
-  position: absolute;
+  position: fixed;
+  top: 0;
 }
 
 .erro-listagem{
@@ -17,6 +25,7 @@
 }
 
 .home-container {
+  margin-top: 66px;
   align-items: center;
 }
 
@@ -56,11 +65,11 @@
   display: grid;
   justify-content: center;
   align-items: center;
-  margin-top: 5vh;
   width: 100%;
-  height: 100%;
+  height: calc(100vh - 66px - 56px);
   grid-template-columns: 35% 35% 35%;
-  overflow: hidden;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
 .loader-container {

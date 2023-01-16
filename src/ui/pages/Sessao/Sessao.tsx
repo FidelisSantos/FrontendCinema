@@ -4,15 +4,15 @@ import { ThreeCircles } from "react-loader-spinner";
 import { Navigate } from "react-router-dom";
 import { VscAdd } from "react-icons/vsc";
 import styles from "./Sessao.module.css"
-import { Table } from "reactstrap";
+import { Button, Input, Table } from "reactstrap";
 import { useSessao } from './hooks/useSessao';
 import { ListSessoes } from '../../components/table/ListSessoes/ListSessoes';
 import { CreateSessao } from "../../components/modal/Sessao/CreateSessao/CreateSessao";
 import { AlertError } from "../../components/alert/Alert";
 
 export function Sessao({...props}) {
-  const {  loading, sessoes, error, setError, getSessoesList, isOpen, setIsOpen, deleteSessao,
-          salas, filmes, createSessao, updateSessao, errorMessage, setErrorMessage} = useSessao();
+  const { loading, sessoes, error, setError, getSessoesList, isOpen, setIsOpen, deleteSessao, salas, filmes, createSessao,
+         updateSessao, errorMessage, setErrorMessage, searchSessao, isDisabled, setIsDisabled } = useSessao();
 
     useEffect(() => {
       if(!localStorage.getItem('token')) {
@@ -68,7 +68,7 @@ export function Sessao({...props}) {
       {!loading && errorMessage == 'Erro ao Listar as sessões' && 
         <div className={styles['erro-listagem']}><img src={props.errorImg} alt="Error"/></div>}
       {!loading && errorMessage != 'Erro ao Listar as sessões' &&
-        <>  
+        <div  className={styles['sessao-container']}> 
         <div className={styles['table-sessao-container']}>
         <Table className={styles['table-sessao']}>
         <thead className={styles['thead-sessao']}>
@@ -76,13 +76,34 @@ export function Sessao({...props}) {
             <th><button onClick={()=> setIsOpen(true)}><VscAdd/></button></th>
             <CreateSessao setIsOpen={setIsOpen} isOpen={isOpen} 
               filmes={filmes} salas={salas} createSessao={createSessao}/>
-            <th>Sessoes</th>
+            <th>Sessões</th>
             <th>Filme</th>
             <th>Inicio</th>
             <th>Fim</th>
             <th>Sala</th>
             <th>Status</th>
-            <th></th>
+            <th> 
+              <div className={styles['search-container']}>
+                  <Input
+                  className={styles['search-container-input']} 
+                  type="select" 
+                  onChange={searchSessao} 
+                  defaultValue={0}
+                  disabled={isDisabled}
+                  >
+                    <option value="0"> Todas Salas</option>
+                      {salas.map((sala)=> 
+                    <option key={sala.id} value={sala.id}>Sala {sala.id}</option>)}
+                  </Input>
+                {isDisabled && 
+                <Button
+                color="danger" 
+                onClick={()=>{
+                  getSessoesList();
+                  setIsDisabled(false);
+                  }}>Limpar</Button>}
+              </div> 
+            </th>
           </tr>
         </thead>
         <tbody>
@@ -93,7 +114,7 @@ export function Sessao({...props}) {
         </tbody>
       </Table>
       </div>
-        </>}
+        </div>}
     </div>
   );
 }

@@ -8,9 +8,14 @@ export function useTags() {
   const [error, setError] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const [isOpen, setIsOpen] = useState(false);
+  const [isDisabled,setIsDisabled] = useState(false);
+  const tagsSearch: TagType[] = [];
+  const [search, setSearch] = useState('');
 
   const getTagsList = async () => {
     setErrorMessage('');
+    setIsDisabled(false);
+    setSearch('')
     const token = `Bearer ${localStorage.getItem('token')}`;
     if (token) { 
       const response = await tagService.getTag(token);
@@ -123,6 +128,27 @@ export function useTags() {
     setLoading(false);
   }
 
-  return {loading, tags, error, setError, getTagsList, isOpen, setIsOpen, 
-          deleteTag, createTag, updateTag, errorMessage, setErrorMessage}
+  const searchTags= (search: string) => {
+    if(!search){
+      getTagsList();
+      return;
+    }
+    const searchFilme = search;
+      tags.forEach((tag) => {
+        if (tag.tag.toLocaleLowerCase().includes(searchFilme.toLocaleLowerCase())) {
+              tagsSearch.push(tag);
+            }
+      })
+      if(!tagsSearch.length) {
+        setError(true);
+        setErrorMessage('Nenhuma tag encontrada');
+      }else setTags(tagsSearch);
+        
+      setIsDisabled(true);
+  }
+  
+
+  return { loading, tags, error, setError, getTagsList, isOpen, setIsOpen, deleteTag, createTag,
+           updateTag, errorMessage, setErrorMessage, isDisabled, setIsDisabled, search, setSearch, 
+           searchTags }
 }

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { FormEvent, useState } from "react";
 import { SessaoType } from "../../../../types/sessaoType";
 import { sessaoService } from '../service/sessaoService';
 import { SalaType } from "../../../../types/salaType";
@@ -15,6 +15,8 @@ export function useSessao() {
   const [isOpen, setIsOpen] = useState(false);
   const [salas, setSalas] = useState<SalaType[]>([]);
   const [filmes, setFilmes] = useState<FilmeType[]>([]);
+  const sessoesSearch: SessaoType[] = [];
+  const [isDisabled,setIsDisabled ] = useState(false);
 
 
   const getSessoesList = async () => {
@@ -154,7 +156,34 @@ export function useSessao() {
     setLoading(false);
   }
 
+  const searchSessao = async (e: FormEvent<HTMLInputElement>) => {
+    const salaId = +e.currentTarget.value;
+    setLoading(true);
+    if(!salaId|| salaId === 0){
+      getSessoesList();
+      return;
+    }
+      sessoes.forEach((sessao) => {
+        console.log(sessao)
+        if (sessao.sala.id === salaId) {
+              sessoesSearch.push(sessao);
+            }
+      })
+      if(!sessoesSearch.length) {
+        setError(true);
+        setErrorMessage('Nenhuma sessão encontrada nessa sala');
+        e.currentTarget.value = "0";
+      } else {
+        setSessoes(sessoesSearch);
+        setIsDisabled(true);
+      }
+      setLoading(false);
+      
+  }
 
-  return { loading, sessoes, error, setError, getSessoesList, isOpen, setIsOpen, deleteSessao,
-           salas, filmes, createSessao, updateSessao, errorMessage, setErrorMessage }
+
+
+  return { loading, sessoes, error, setError, getSessoesList, isOpen, setIsOpen, deleteSessao, 
+          salas, filmes, createSessao, updateSessao, errorMessage, setErrorMessage, searchSessao, 
+          isDisabled, setIsDisabled }
 }

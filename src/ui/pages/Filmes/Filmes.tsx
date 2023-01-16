@@ -8,10 +8,12 @@ import { VscAdd } from 'react-icons/vsc';
 import { CreateModal } from '../../components/modal/Filmes/CreateModal/CreateModal';
 import { CardFilmes } from '../../components/card/Filmes/CardFilmes';
 import { AlertError } from '../../components/alert/Alert';
+import { Button, Input } from 'reactstrap';
 
 export function Filmes({...props}) {
-  const { filmes, loading, error, setError, getFilmesList, deleteFilme, createFilme,
-          isOpen, setIsOpen, tags, updateFilme, errorMessage, setErrorMessage, createUrl, updateUrl } = useFilmes()
+  const { filmes, loading, error, setError, getFilmesList, deleteFilme, createFilme,isOpen, 
+        setIsOpen, tags, updateFilme, errorMessage, setErrorMessage, createUrl, updateUrl, 
+        searchFilme, isDisabled, search, setSearch } = useFilmes()
 
   useEffect(() => {
     if(!localStorage.getItem('token')) {
@@ -44,11 +46,13 @@ export function Filmes({...props}) {
 
   return (
     <div>
-    <HeaderAdm className={styles['header']} isAuth={props.isAuth} setIsAuth={setIsAuth} error={props.error}
-        setError={props.setError} errorMessage={props.errorMessage} 
-        setErrorMessage={props.setErrorMessage} page={props.page}/>
-    <div className={styles['alert-container']}>
-        <AlertError error={error} setError={setError} errorMessage={errorMessage}/>
+      <div className={styles['header-container']}>
+        <HeaderAdm isAuth={props.isAuth} setIsAuth={setIsAuth} error={props.error}
+          setError={props.setError} errorMessage={props.errorMessage} 
+          setErrorMessage={props.setErrorMessage} page={props.page}/>
+        <div className={styles['alert-container']}>
+          <AlertError error={error} setError={setError} errorMessage={errorMessage}/>
+        </div>
     </div>
       {loading && 
         <div className={styles['loader-container']}>
@@ -71,8 +75,23 @@ export function Filmes({...props}) {
       {!loading && errorMessage != 'Erro ao Listar a sala' &&
       <>
       <div className={styles['filmes']}>
-        <h1><strong>Filmes</strong></h1>
-        <button onClick={toogleModal}><VscAdd/></button>
+      <div className={styles['search-container']}>
+        <Input
+            className={styles['search-input']}
+            type="search"
+            onChange={(e: any) =>setSearch(e.currentTarget.value)}
+            disabled={isDisabled}
+            value={search}
+            placeholder="Pesquisa"/>
+        {!isDisabled && <Button className={styles['btn-search']}
+            onClick={()=> searchFilme(search)}
+            >Pesquisar</Button>}
+        {isDisabled && <Button className={styles['btn-reset']} 
+            onClick={() => {
+              getFilmesList()
+              setSearch('')}}>Limpar</Button>}
+      </div>
+        <button onClick={toogleModal} className={styles['add-button']}><VscAdd/></button>
         <CreateModal isOpen={isOpen} setIsOpen={setIsOpen} tags={tags} 
           createFilme={createFilme} createUrl={createUrl}/>
       </div>

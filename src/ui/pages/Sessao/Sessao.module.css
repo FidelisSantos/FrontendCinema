@@ -1,6 +1,37 @@
 .header-container{
+  position: fixed;
   width: 100%;
-  padding-top: 0px;
+  height: 66px;
+  top:0;
+}
+
+.alert-container{
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  position: fixed;
+  top: 0;
+}
+
+.sessao-container{
+  overflow-y:auto;
+  overflow-x: hidden;
+  margin-top: 66px;
+}
+
+.search-container{
+  display: flex;
+  height: 8%;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+}
+
+.search-container-input{
+  display: flex;
+  justify-content: center;
+  width: 70%;
+  min-width: 100px;
 }
 
 .alert-container{

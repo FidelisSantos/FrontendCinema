@@ -1,8 +1,16 @@
+.header-container{
+  position: fixed;
+  width: 100%;
+  height: 66px;
+  top:0;
+}
+
 .alert-container{
   display: flex;
   justify-content: center;
   width: 100%;
-  position: absolute;
+  position: fixed;
+  top: 0;
 }
 
 .erro-listagem{
@@ -16,6 +24,38 @@
   width: 400px;
 }
 
+.search-container {
+  display: flex;
+  width: 95%;
+  height: 40px;
+  justify-items: center;
+}
+
+.search-input {
+  text-align: center;
+}
+
+.btn-search {
+  background-color: black;
+}
+
+.btn-search:hover {
+  transition: 0.7s;
+  background-color: rgb(3, 3, 3);
+  color:red;
+}
+
+.btn-reset {
+  background-color: rgb(138, 0, 0);
+}
+
+.btn-reset:hover {
+  transition: 0.7s;
+  background-color: rgb(179, 1, 1);
+  color: black;
+}
+
+
 .loader-container {
   display: flex;
   justify-content: center;
@@ -23,24 +63,24 @@
 }
 
 .filmes {
+  margin-top: 67px;
   display: flex;
   justify-content: space-between;
   color: white;
-  background-color: black;
 }
 
-.filmes button {
+.add-button {
   width: 70px;
-  background-color: black;
-  color: white;
-  font-size: 2rem;
-  border: none;
+  color:rgb(3, 3, 3);
+  font-size: 1.5rem;
+  background-color: rgb(255, 255, 255);
 }
 
 .filmes-container{
   display: grid;
   grid-template-columns: 30% 30% 30%;
   width: 100%;
+  justify-content: center;
   height: calc(100vh - 66px - 56px);
   background: linear-gradient(90deg, rgb(150, 150, 153) 0%, rgb(90, 89, 89) 35%, rgb(189, 189, 189) 100%);
   overflow: auto;

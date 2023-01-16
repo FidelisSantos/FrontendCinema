@@ -1,8 +1,16 @@
+.header-container{
+  position: fixed;
+  width: 100%;
+  height: 66px;
+  top:0;
+}
+
 .alert-container{
   display: flex;
   justify-content: center;
   width: 100%;
-  position: absolute;
+  position: fixed;
+  top: 0;
 }
 
 .erro-listagem{
@@ -16,17 +24,62 @@
   width: 400px;
 }
 
-
 .loader-container {
   display: flex;
   justify-content: center;
   margin-top: 35vh;
 }
 
+.tags-container {
+  overflow-y:auto;
+  overflow-x: hidden;
+}
+
 .table-tags-container{
+  margin-top: 66px;
   display: flex;
   text-align: center;
   width: 100%;
   background: rgb(2,0,36);
   background: linear-gradient(90deg, rgb(150, 150, 153) 0%, rgb(90, 89, 89) 35%, rgb(189, 189, 189) 100%);
 }
+
+.search-container{
+  display: flex;
+  height: 8%;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+}
+
+.th-container {
+  width: 33%;
+}
+
+.search-container-input{
+  display: flex;
+  justify-content: end;
+  width: 70%;
+  min-width: 100px;
+}
+
+.btn-search {
+  background-color: black;
+}
+
+.btn-search:hover {
+  transition: 0.7s;
+  background-color: rgb(3, 3, 3);
+  color:red;
+}
+
+.btn-reset {
+  background-color: rgb(138, 0, 0);
+}
+
+.btn-reset:hover {
+  transition: 0.7s;
+  background-color: rgb(179, 1, 1);
+  color: black;
+}
+

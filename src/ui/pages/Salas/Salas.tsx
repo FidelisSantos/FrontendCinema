@@ -43,12 +43,14 @@ export function Salas({...props}) {
 
   return (
     <>
-      <HeaderAdm  isAuth={props.isAuth} setIsAuth={setIsAuth} error={props.error}
-          setError={props.setError} errorMessage={props.errorMessage} 
-          setErrorMessage={props.setErrorMessage} page={props.page}/>
-          <div className={styles['alert-container']}>
-            <AlertError error={error} setError={setError} errorMessage={errorMessage}/>
-          </div>
+     <div className={styles['header-container']}>
+        <HeaderAdm isAuth={props.isAuth} setIsAuth={setIsAuth} error={props.error}
+        setError={props.setError} errorMessage={props.errorMessage} 
+        setErrorMessage={props.setErrorMessage} page={props.page}/>
+        <div className={styles['alert-container']}>
+          <AlertError error={error} setError={setError} errorMessage={errorMessage}/>
+        </div>
+      </div>
       {loading && 
         <div className={styles['loader-container']}>
             <ThreeCircles 
@@ -69,19 +71,19 @@ export function Salas({...props}) {
       {!loading && errorMessage != 'Erro ao Listar a sala' &&
       <>  
       <div className={styles['table-salas-container']}>
-      <Table className={styles['table-salas']}>
-      <thead>
-        <tr>
-          <th><button onClick={createSala}><VscAdd/></button></th>
-          <th>Salas</th>
-          <th>Status</th>
-          <th></th>
-        </tr>
-      </thead>
-      <tbody>
-        {salas.map(sala => <tr key={sala.id}><ListSalas sala={sala} removeSala={removeSala}/> </tr>)}
-      </tbody>
-    </Table>
+        <Table className={styles['table-salas']}>
+        <thead>
+          <tr>
+            <th><button onClick={createSala}><VscAdd/></button></th>
+            <th>Salas</th>
+            <th>Status</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          {salas.map(sala => <tr key={sala.id}><ListSalas sala={sala} removeSala={removeSala}/> </tr>)}
+        </tbody>
+      </Table>
     </div>
     </>}
   </>

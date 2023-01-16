@@ -13,10 +13,14 @@ export function useFilmes() {
   const [errorMessage, setErrorMessage] = useState('');
   const [isOpen, setIsOpen] = useState(false);
   const [tags, setTags] = useState<TagType[]>([]);
-  const imagesTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/png'];
+  const imagesTypes = ['image/jpeg', 'image/jpg', 'image/png'];
+  const [isDisabled,setIsDisabled ] = useState(false);
+  const filmeSearch: FilmeType[] = [];
+  const [search, setSearch] = useState('');
   
 
   const getFilmesList = async () => {
+    setIsDisabled(false);
     setErrorMessage('');
     const token = `Bearer ${localStorage.getItem('token')}`;
     if (token) { 
@@ -228,8 +232,33 @@ export function useFilmes() {
   }
 }
   
-
+const searchFilme= (search: string) => {
+  if(!search){
+    getFilmesList();
+    return;
+  }
+  const searchFilme = search;
+    filmes.forEach((filme) => {
+      if (filme.titulo.toLocaleLowerCase().includes(searchFilme.toLocaleLowerCase()) &&
+          filmeSearch.findIndex((filmeSearch)=>filmeSearch.id ==filme.id) < 0) {
+            filmeSearch.push(filme);
+          }
+          filme.tags.forEach((tag) =>{
+                if(tag.tag.toLocaleLowerCase().includes(searchFilme.toLocaleLowerCase()) &&
+                filmeSearch.findIndex((filmeSearch) => filmeSearch.id ==  filme.id) < 0){
+                  filmeSearch.push(filme);
+                }
+              })
+    })
+    if(!filmeSearch.length) {
+      setError(true);
+      setErrorMessage('Nenhum filme encontrado');
+    }else setFilmes(filmeSearch);
+      
+    setIsDisabled(true);
+}
 
   return { filmes, loading, error, setError, getFilmesList, deleteFilme, createFilme,isOpen, 
-          setIsOpen, tags, updateFilme, errorMessage, setErrorMessage, createUrl, updateUrl };
+            setIsOpen, tags, updateFilme, errorMessage, setErrorMessage, createUrl, updateUrl, 
+            searchFilme, isDisabled,setIsDisabled, search, setSearch };
 }

@@ -50,6 +50,7 @@
 .card-buttons {
   display: flex;
   justify-content: end;
+
 }
 
 .card-button-remove {

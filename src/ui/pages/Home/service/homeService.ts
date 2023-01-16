@@ -9,16 +9,6 @@ export const homeService = {
       return null;
     })
     return data;
-  },
-
-  searchFilmesSessoes: async (search: string) => {
-    const data = await api.get<FilmeSessaoType[]>('filmesessao',{params: {search: search}})
-    .then((response) => response.data)
-    .catch(() => {
-      return [];
-    })
-    return data;
   }
-
 
 }
