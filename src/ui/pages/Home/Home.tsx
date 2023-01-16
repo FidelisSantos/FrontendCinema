@@ -83,6 +83,8 @@ export function Home ({...props}) {
         </div>}
         {errorMessage == 'Nenhum filme encontrado' &&
           <h1 className={styles['error-search']}>{errorMessage}</h1>}
+        {errorMessage == 'Não há filmes em cartaz' &&
+          <h1 className={styles['error-search']}>{errorMessage}</h1>}
       </>}
     </div>
     )

@@ -22,13 +22,19 @@ export function useHome() {
   const getFilmeSessoes = async () => {
     const getSessoes = await homeService.getFilmesSessoes()
     if(getSessoes != null) {
-      setSessoes(getSessoes);
-      setErrorMessage('');
-    } else{
+      if(getSessoes.length > 0){
+        setSessoes(getSessoes);
+        setErrorMessage('');
+        setError(false);
+      } else {
+        setErrorMessage('Não há filmes em cartaz');
+        setError(true);
+      }
+    } else {
       setErrorMessage('Erro ao listar sessões');
+      setError(true);
     }
     setIsDisabled(false);
-    setError(false);
     setLoading(false);
   }
 
