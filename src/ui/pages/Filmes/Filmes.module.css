@@ -78,7 +78,7 @@
 
 .filmes-container{
   display: grid;
-  grid-template-columns: 30% 30% 30%;
+  grid-template-columns: 35% 35% 35%;
   width: 100%;
   justify-content: center;
   height: calc(100vh - 70px - 40px);
