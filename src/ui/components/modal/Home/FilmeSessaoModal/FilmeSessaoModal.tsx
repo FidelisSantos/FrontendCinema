@@ -38,7 +38,7 @@ export function FilmeSessaoModal({...props}) {
       </fieldset>
     </ModalBody>
     <ModalFooter>
-      <Button color="secondary" onClick={toggleModal}>Cancel</Button>
+      <Button color="danger" onClick={toggleModal}>Sair</Button>
     </ModalFooter>
   </Modal>
   );
