@@ -1,7 +1,8 @@
-import { FilmeType } from "./filmeType";
-import { SessaoFilmeSessao } from "./sessaoFilmeSessaoType";
+import { FilmeType } from './filmeType';
+import { SessaoFilmeSessao } from './sessaoFilmeSessaoType';
 
-export type FilmeSessaoType = {
-  filme: FilmeType,
-  sessoes: SessaoFilmeSessao[];
+// eslint-disable-next-line @typescript-eslint/naming-convention
+export interface FilmeSessaoType {
+	filme: FilmeType;
+	sessoes: SessaoFilmeSessao[];
 }

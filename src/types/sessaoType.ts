@@ -1,11 +1,12 @@
-import { FilmeType } from "./filmeType";
-import { SalaType } from "./salaType";
+import { FilmeType } from './filmeType';
+import { SalaType } from './salaType';
 
-export type SessaoType = {
-  id: number;
-  init: Date;
-  finish: Date;
-  status: string;
-  filme: FilmeType;
-  sala: SalaType;
+// eslint-disable-next-line @typescript-eslint/naming-convention
+export interface SessaoType {
+	id: number;
+	init: Date;
+	finish: Date;
+	status: string;
+	filme: FilmeType;
+	sala: SalaType;
 }

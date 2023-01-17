@@ -1,4 +1,5 @@
-export type SalaType = {
-  id: number;
-  status: string;
+// eslint-disable-next-line @typescript-eslint/naming-convention
+export interface SalaType {
+	id: number;
+	status: string;
 }

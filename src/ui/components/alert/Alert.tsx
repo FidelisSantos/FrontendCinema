@@ -1,15 +1,20 @@
-import { Alert } from "reactstrap";
-import styles from "./Alert.module.css";
+import { Alert } from 'reactstrap';
 
-export function AlertError({...props}) {
+import styles from './Alert.module.css';
 
-  function toogle() {
-    props.setError(false);
-  }
+export function AlertError({ ...props }) {
+	function toogle() {
+		props.setError(false);
+	}
 
-  return (
-    <Alert color="danger" isOpen={props.error} toggle={toogle} className={styles['alert-container']}>
-        {props.errorMessage}
-    </Alert>
-  )
+	return (
+		<Alert
+			color="danger"
+			isOpen={props.error}
+			toggle={toogle}
+			className={styles['alert-container']}
+		>
+			{props.errorMessage}
+		</Alert>
+	);
 }

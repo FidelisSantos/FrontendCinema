@@ -1,47 +1,54 @@
-import { AxiosError } from "axios";
-import { api } from "../../../../api/api"
-import { SalaType } from "../../../../types/salaType"
+import { AxiosError } from 'axios';
 
-export const salaService= {
-    getSalaList: async (token: string) => {
-      const salas = await api.get<SalaType[]>('sala',{ headers:{Authorization: token}})
-        .then((response) => {
-          return response.data;
-        })
-        .catch((error:AxiosError) => {
-            if (error.response && error.response.status === 401) 
-                  return 'Unauthorized';
-            else 
-              return 'Error';
-            });
-      return salas;
-    },
+import { api } from '../../../../api/api';
+import { SalaType } from '../../../../types/salaType';
 
-    postSala: async (token: string) => {
-      const isCreated = await api.post<SalaType>('sala','',{ headers: {Authorization: token}})
-        .then(() => true)
-        .catch((error:AxiosError) => {
-          if (error.response && error.response.status === 401) 
-                return 'Unauthorized';
-          else 
-            return false;
-          
-        });
+export const salaService = {
+	getSalaList: async (token: string) => {
+		const salas = await api
+			.get<SalaType[]>('sala', { headers: { Authorization: token } })
+			.then((response) => {
+				return response.data;
+			})
+			.catch((error: AxiosError) => {
+				if (error.response != null && error.response.status === 401) {
+					return 'Unauthorized';
+				} else {
+					return 'Error';
+				}
+			});
+		return salas;
+	},
 
-       return isCreated;
-    },
+	postSala: async (token: string) => {
+		const isCreated = await api
+			.post<SalaType>('sala', '', { headers: { Authorization: token } })
+			.then(() => true)
+			.catch((error: AxiosError) => {
+				if (error.response != null && error.response.status === 401) {
+					return 'Unauthorized';
+				} else {
+					return false;
+				}
+			});
 
-    deleteSala: async (token: string, id: number) => {
-      const isDeleted = await api.delete<SalaType>(`sala/${id}`,{ headers: {Authorization: token}})
-        .then(() => true)
-        .catch((error:AxiosError) => {
-          if (error.response && error.response.status === 400) 
-                return 'Sala sendo utilizada';
-          if (error.response && error.response.status === 401) 
-                return 'Unauthorized';
-          else 
-            return false;
-        });
-       return isDeleted;
-    }
-}
+		return isCreated;
+	},
+
+	deleteSala: async (token: string, id: number) => {
+		const isDeleted = await api
+			.delete<SalaType>(`sala/${id}`, { headers: { Authorization: token } })
+			.then(() => true)
+			.catch((error: AxiosError) => {
+				if (error.response != null && error.response.status === 400) {
+					return 'Sala sendo utilizada';
+				}
+				if (error.response != null && error.response.status === 401) {
+					return 'Unauthorized';
+				} else {
+					return false;
+				}
+			});
+		return isDeleted;
+	}
+};
