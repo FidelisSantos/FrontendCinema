@@ -32,7 +32,7 @@ export function LoginModal({ ...props }) {
 			)}
 			{props.errorLogin && (
 				<Alert className={styles['error-login']} color="danger">
-					Login ou Senha Incorretos
+					Email ou Senha Incorretos
 				</Alert>
 			)}
 			<ModalBody>
@@ -53,7 +53,7 @@ export function LoginModal({ ...props }) {
 					</FormGroup>
 					<FormGroup className="mb-2 mr-sm-2 mb-sm-0">
 						<Label for="examplePassword" className="mr-sm-2">
-							Password:
+							Senha:
 						</Label>
 						<Input
 							type="password"
