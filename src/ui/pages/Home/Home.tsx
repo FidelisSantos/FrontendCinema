@@ -64,11 +64,13 @@ export function Home({ ...props }) {
 						page={props.page}
 					/>
 				)}
-				<AlertError
-					error={error}
-					setError={setError}
-					errorMessage={errorMessage}
-				/>
+				<div className={styles['alert-container']}>
+					<AlertError
+						error={error}
+						setError={setError}
+						errorMessage={errorMessage}
+					/>
+				</div>
 			</div>
 			{loading && (
 				<div className={styles['loader-container']}>
