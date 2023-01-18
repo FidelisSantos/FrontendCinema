@@ -11,11 +11,9 @@ export const tagService = {
 				return response.data;
 			})
 			.catch((error: AxiosError) => {
-				if (error.response != null && error.response.status === 401) {
+				if (error.response != null && error.response.status === 401)
 					return 'Unauthorized';
-				} else {
-					return 'Error';
-				}
+				else return 'Error';
 			});
 		return tags;
 	},
@@ -25,13 +23,11 @@ export const tagService = {
 			.delete(`tags/${id}`, { headers: { Authorization: token } })
 			.then(() => true)
 			.catch((error) => {
-				if (error.response && error.response.status === 401) {
+				if (error.response && error.response.status === 401)
 					return 'Unauthorized';
-				} else if (error.response && error.response.status === 500) {
+				else if (error.response && error.response.status === 500)
 					return 'Erro ao Deletar';
-				} else {
-					return error.response.data.message;
-				}
+				else return error.response.data.message;
 			});
 
 		return isDeleted;
@@ -42,13 +38,11 @@ export const tagService = {
 			.post('tags', body, { headers: { Authorization: token } })
 			.then(() => true)
 			.catch((error) => {
-				if (error.response && error.response.status === 401) {
+				if (error.response && error.response.status === 401)
 					return 'Unauthorized';
-				} else if (error.response && error.response.status === 500) {
+				else if (error.response && error.response.status === 500)
 					return 'Erro ao criar';
-				} else {
-					return error.response.data.message;
-				}
+				else return error.response.data.message;
 			});
 		return Create;
 	},
@@ -58,11 +52,9 @@ export const tagService = {
 			.patch(`tags/${id}`, body, { headers: { Authorization: token } })
 			.then(() => true)
 			.catch((error) => {
-				if (error.response && error.response.status === 401) {
+				if (error.response && error.response.status === 401)
 					return 'Unauthorized';
-				} else {
-					return error.response.data.message;
-				}
+				else return error.response.data.message;
 			});
 		return Create;
 	}

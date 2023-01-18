@@ -39,9 +39,9 @@ export const salaService = {
 		const isDeleted = await api
 			.delete<SalaType>(`sala/${id}`, { headers: { Authorization: token } })
 			.then(() => true)
-			.catch((error: AxiosError) => {
+			.catch((error: any) => {
 				if (error.response != null && error.response.status === 400) {
-					return 'Sala sendo utilizada';
+					return error.response.data.message as string;
 				}
 				if (error.response != null && error.response.status === 401) {
 					return 'Unauthorized';

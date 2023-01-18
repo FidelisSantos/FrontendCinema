@@ -23,13 +23,10 @@ export function useTags() {
 			if (response == 'Unauthorized') {
 				setErrorMessage('token');
 				localStorage.removeItem('token');
-				return;
 			} else if (response == 'Error') {
 				setErrorMessage('Erro ao Listar a sala');
 				setError(true);
-				return;
-			}
-			setTags(response);
+			} else setTags(response);
 		} else {
 			setErrorMessage('token');
 		}

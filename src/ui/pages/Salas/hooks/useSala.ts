@@ -15,16 +15,12 @@ export function useSala() {
 			const response = await salaService.getSalaList(token);
 			if (response == 'Unauthorized') {
 				setErrorMessage('token');
+				localStorage.removeItem('token');
 			} else if (response == 'Error') {
 				setErrorMessage('Erro ao Listar a sala');
 				setError(true);
 			} else setSalas(response);
-		} else {
-			setErrorMessage('token');
-			if (token) {
-				localStorage.removeItem('token');
-			}
-		}
+		} else setErrorMessage('token');
 
 		setLoading(false);
 	};
@@ -36,8 +32,7 @@ export function useSala() {
 			const response = await salaService.postSala(token);
 			if (response == 'Unauthorized') {
 				setErrorMessage('token');
-				setLoading(false);
-				return;
+				localStorage.removeItem('token');
 			} else if (!response) {
 				setErrorMessage('Erro ao criar a sala');
 				setError(true);
@@ -64,12 +59,10 @@ export function useSala() {
 			const response = await salaService.deleteSala(token, id);
 			if (response == 'Unauthorized') {
 				setErrorMessage('token');
-				setLoading(false);
-				return;
+				localStorage.removeItem('token');
 			} else if (!response) {
 				setErrorMessage('Erro ao deletar a sala');
-				setLoading(false);
-				return;
+				setError(true);
 			} else if (response === true) {
 				getSalaList();
 				return;
@@ -78,9 +71,8 @@ export function useSala() {
 				setLoading(false);
 				setError(true);
 			}
-		} else {
-			setErrorMessage('token');
-		}
+		} else setErrorMessage('token');
+
 		setLoading(false);
 	};
 

@@ -18,8 +18,6 @@ export function useApp() {
 		};
 		const token = await appService.loginAdm(login);
 		localStorage.setItem('token', token);
-		console.log(token);
-		console.log(localStorage.getItem('token'));
 		if (token) setIsAuth(true);
 		else {
 			setErrorLogin(true);
