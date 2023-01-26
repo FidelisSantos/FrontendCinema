@@ -20,7 +20,6 @@ export function CreateModal({ ...props }) {
 			imagem,
 			classificacao
 		);
-		toogle();
 	}
 
 	function createUrl(
@@ -39,7 +38,6 @@ export function CreateModal({ ...props }) {
 			descricao,
 			classificacao
 		);
-		toogle();
 	}
 
 	function toogle() {

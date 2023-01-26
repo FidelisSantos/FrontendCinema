@@ -11,8 +11,8 @@ import {
 	ModalHeader
 } from 'reactstrap';
 
-import { FilmeType } from '../../../../../types/filmeType';
-import { SalaType } from '../../../../../types/salaType';
+import { MovieType } from '../../../../../types/movieType';
+import { RoomType } from '../../../../../types/roomType';
 import { Confirmation } from '../../Confirmation/Confirmation';
 import styles from './CreateSessao.module.css';
 
@@ -48,7 +48,7 @@ export function CreateSessao({ ...props }) {
 		if (filme) {
 			if (dateTime) {
 				const hourFinish = new Date(
-					dateTime.getTime() + filme.tempoDeFilme * 60000
+					dateTime.getTime() + filme.movieTime * 60000
 				);
 				if (
 					hourFinish.getHours() > 22 ||
@@ -63,9 +63,9 @@ export function CreateSessao({ ...props }) {
 
 	function getFilme() {
 		let filme;
-		for (let index = 0; index < props.filmes.length; index++) {
-			if (props.filmes[index].id === filmeId) {
-				filme = props.filmes[index];
+		for (let index = 0; index < props.movies.length; index++) {
+			if (props.movies[index].id === filmeId) {
+				filme = props.movies[index];
 			}
 		}
 		return filme;
@@ -99,9 +99,9 @@ export function CreateSessao({ ...props }) {
 							<Label>Filmes</Label>
 							<Input type="select" onChange={getFilmeId} defaultValue={0}>
 								<option value="0"></option>
-								{props.filmes.map((filme: FilmeType) => (
-									<option key={filme.id} value={filme.id}>
-										{filme.titulo}
+								{props.movies.map((movie: MovieType) => (
+									<option key={movie.id} value={movie.id}>
+										{movie.title}
 									</option>
 								))}
 							</Input>
@@ -110,9 +110,9 @@ export function CreateSessao({ ...props }) {
 							<Label>Salas</Label>
 							<Input type="select" onChange={getSalaId} defaultValue={0}>
 								<option value="0"></option>
-								{props.salas.map((sala: SalaType) => (
-									<option key={sala.id} value={sala.id}>
-										Sala {sala.id}
+								{props.rooms.map((room: RoomType) => (
+									<option key={room.id} value={room.id}>
+										{room.name}
 									</option>
 								))}
 							</Input>

@@ -8,13 +8,13 @@ import {
 
 import { api } from '../../../../api/api';
 import { storage } from '../../../../firebase/firebase-app';
-import { FilmeType } from '../../../../types/filmeType';
-import { PostFilmeType } from '../../../../types/postFilmeType';
+import { MovieType } from '../../../../types/movieType';
+import { PostFilmeType } from '../../../../types/postMovieType';
 
 export const filmesService = {
 	getFilmes: async (token: string) => {
 		const filmes = await api
-			.get<FilmeType[]>('filme', { headers: { Authorization: token } })
+			.get<MovieType[]>('filme', { headers: { Authorization: token } })
 			.then((response) => {
 				return response.data;
 			})

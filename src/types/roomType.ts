@@ -1,5 +1,6 @@
 // eslint-disable-next-line @typescript-eslint/naming-convention
-export interface SalaType {
+export interface RoomType {
 	id: number;
+	name: string;
 	status: string;
 }

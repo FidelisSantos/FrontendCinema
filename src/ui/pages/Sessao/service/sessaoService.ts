@@ -1,13 +1,13 @@
 import { AxiosError } from 'axios';
 
 import { api } from '../../../../api/api';
-import { PostSessaoType } from '../../../../types/postSessaoType';
-import { SessaoType } from '../../../../types/sessaoType';
+import { PostSessaoType } from '../../../../types/postSessionType';
+import { SessionType } from '../../../../types/sessionType';
 
 export const sessaoService = {
 	getSessao: async (token: string) => {
 		const listSessoes = await api
-			.get<SessaoType[]>('sessao', { headers: { Authorization: token } })
+			.get<SessionType[]>('sessao', { headers: { Authorization: token } })
 			.then((response) => {
 				return response.data;
 			})
@@ -41,6 +41,7 @@ export const sessaoService = {
 			.post('sessao', body, { headers: { Authorization: token } })
 			.then(() => true)
 			.catch((error) => {
+				console.log(error.response);
 				if (error.response && error.response.status === 401) {
 					return 'Unauthorized';
 				} else if (error.response && error.response.status === 500) {
@@ -54,7 +55,7 @@ export const sessaoService = {
 		const Create = await api
 			.patch(`sessao/${id}`, body, { headers: { Authorization: token } })
 			.then(() => true)
-			.catch((error) => {
+			.catch((error: any) => {
 				if (error.response && error.response.status === 401) {
 					return 'Unauthorized';
 				} else if (error.response && error.response.status === 500) {

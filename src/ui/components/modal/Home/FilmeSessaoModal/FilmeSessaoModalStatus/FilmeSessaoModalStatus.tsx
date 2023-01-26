@@ -1,10 +1,10 @@
-import { SessaoFilmeSessao } from '../../../../../../types/sessaoFilmeSessaoType';
+import { SessionsMovieType } from '../../../../../../types/sessionsMovieType';
 
-export function HomeModalBodySessao(props: SessaoFilmeSessao) {
-	const inicio = new Date(props.inicio);
+export function HomeModalBodySessao(props: SessionsMovieType) {
+	const inicio = new Date(props.init);
 	return (
-		<div key={props.sessaoId}>
-			<strong>Sala {props.salaId}: </strong>
+		<div key={props.sessionId}>
+			<strong>{props.roomName}: </strong>
 			{`${inicio.toLocaleDateString()} - ${
 				inicio.getHours() < 10 ? '0' + inicio.getHours() : inicio.getHours()
 			}: ${

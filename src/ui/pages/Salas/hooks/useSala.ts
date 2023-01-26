@@ -1,13 +1,16 @@
 import { useState } from 'react';
 
-import { SalaType } from '../../../../types/salaType';
+import { RoomType } from '../../../../types/roomType';
 import { salaService } from '../service/salasService';
 
 export function useSala() {
-	const [salas, setSalas] = useState<SalaType[]>([]);
+	const [salas, setSalas] = useState<RoomType[]>([]);
+	const [salaName, setSalaName] = useState('');
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState(false);
 	const [errorMessage, setErrorMessage] = useState('');
+	const [isOpenCreate, setIsOpenCreate] = useState(false);
+	const [isOpenUpdate, setIsOpenUpdate] = useState(false);
 
 	const getSalaList = async () => {
 		const token = `Bearer ${localStorage.getItem('token')}`;
@@ -29,7 +32,7 @@ export function useSala() {
 		setLoading(true);
 		const token = `Bearer ${localStorage.getItem('token')}`;
 		if (token) {
-			const response = await salaService.postSala(token);
+			const response = await salaService.postSala(salaName, token);
 			if (response == 'Unauthorized') {
 				setErrorMessage('token');
 				localStorage.removeItem('token');
@@ -38,7 +41,36 @@ export function useSala() {
 				setError(true);
 				setLoading(false);
 				return;
-			} else if (response) {
+			} else if (response === true) {
+				setIsOpenCreate(false);
+				getSalaList();
+				return;
+			} else {
+				setErrorMessage(response);
+				setLoading(false);
+				setError(true);
+			}
+		} else {
+			setErrorMessage('token');
+		}
+		setLoading(false);
+	};
+
+	const updateSala = async (id: number, name: string) => {
+		setLoading(true);
+		const token = `Bearer ${localStorage.getItem('token')}`;
+		if (token) {
+			const response = await salaService.updateSala(id, name, token);
+			if (response == 'Unauthorized') {
+				setErrorMessage('token');
+				localStorage.removeItem('token');
+			} else if (!response) {
+				setErrorMessage('Erro ao criar a sala');
+				setError(true);
+				setLoading(false);
+				return;
+			} else if (response === true) {
+				setIsOpenUpdate(false);
 				getSalaList();
 				return;
 			} else {
@@ -80,11 +112,18 @@ export function useSala() {
 		salas,
 		loading,
 		error,
+		salaName,
+		setSalaName,
 		setError,
+		isOpenCreate,
+		setIsOpenCreate,
+		isOpenUpdate,
+		setIsOpenUpdate,
 		getSalaList,
 		createSala,
 		deleteSala,
 		errorMessage,
-		setErrorMessage
+		setErrorMessage,
+		updateSala
 	};
 }

@@ -4,7 +4,7 @@ import { ThreeCircles } from 'react-loader-spinner';
 import { Navigate } from 'react-router-dom';
 import { Button, Input, Table } from 'reactstrap';
 
-import { AlertError } from '../../components/alert/Alert';
+import { AlertError } from '../../components/alert/Alert/Alert';
 import { CreateTag } from '../../components/modal/Tags/CreateTag/CreateTag';
 import { HeaderAdm } from '../../components/navbar/HeaderAdm/HeaderAdm';
 import { ListTags } from '../../components/table/ListTags/ListTags';

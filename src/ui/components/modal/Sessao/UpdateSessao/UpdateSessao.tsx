@@ -12,8 +12,8 @@ import {
 	ModalHeader
 } from 'reactstrap';
 
-import { FilmeType } from '../../../../../types/filmeType';
-import { SalaType } from '../../../../../types/salaType';
+import { MovieType } from '../../../../../types/movieType';
+import { RoomType } from '../../../../../types/roomType';
 import { Confirmation } from '../../Confirmation/Confirmation';
 import styles from './UpdateModal.module.css';
 
@@ -24,12 +24,30 @@ export function UpdateSessao({ ...props }) {
 	const [dateTime, setDateTime] = useState<Date>();
 	const [isOpenConfirmation, setIsOpenConfirmation] = useState(false);
 	const [message, setMessage] = useState('');
-	const inicio = new Date(props.sessao.init);
-	const fim = new Date(props.sessao.finish);
+	const inicioSession = new Date(props.session.init);
+	const finishSession = new Date(props.session.finish);
+	const defaultValueTime = `${inicioSession.getFullYear()}-${
+		inicioSession.getMonth() + 1 > 9
+			? inicioSession.getMonth() + 1
+			: '0' + (inicioSession.getMonth() + 1)
+	}-${
+		inicioSession.getDate() > 9
+			? inicioSession.getDate()
+			: '0' + inicioSession.getDate()
+	}T${
+		inicioSession.getHours() > 9
+			? inicioSession.getHours()
+			: '0' + inicioSession.getHours()
+	}:${
+		inicioSession.getMinutes() > 9
+			? inicioSession.getMinutes()
+			: '0' + inicioSession.getMinutes()
+	}`;
+	console.log(defaultValueTime, 'default');
 
 	async function confirmSessao() {
-		setDateTime(dateTime ? dateTime : inicio);
-		setFilmeId(filmeId ? filmeId : props.sessao.filme.id);
+		setDateTime(dateTime ? dateTime : inicioSession);
+		setFilmeId(filmeId ? filmeId : props.session.movie.id);
 		const validationHour = calcFinish();
 		if (validationHour != null) {
 			if (validationHour) {
@@ -43,21 +61,19 @@ export function UpdateSessao({ ...props }) {
 	function updateSessao() {
 		setIsOpenConfirmation(false);
 		props.setIsOpen(false);
-		const sala = salaId ? salaId : (props.sessao.sala.id as number);
-		const filme = filmeId ? filmeId : (props.sessao.filme.id as number);
-		const initSessao = init ? init : props.sessao.init;
+		const sala = salaId ? salaId : (props.session.room.id as number);
+		const filme = filmeId ? filmeId : (props.session.movie.id as number);
+		const initSessao = init ? init : props.session.init;
 		props.updateSessao(sala, filme, initSessao);
 	}
 
 	function calcFinish() {
 		let filme = getFilme();
-		filme = filme ? filme : props.sessao.filme;
+		filme = filme ? filme : props.session.movie;
 		if (filme) {
-			const date = dateTime ? dateTime : inicio;
+			const date = dateTime ? dateTime : inicioSession;
 			if (date) {
-				const hourFinish = new Date(
-					date.getTime() + filme.tempoDeFilme * 60000
-				);
+				const hourFinish = new Date(date.getTime() + filme.movieTime * 60000);
 				if (
 					hourFinish.getHours() > 22 ||
 					hourFinish.getDate() != date.getDate()
@@ -71,9 +87,9 @@ export function UpdateSessao({ ...props }) {
 
 	function getFilme() {
 		let filme;
-		for (let index = 0; index < props.filmes.length; index++) {
-			if (props.filmes[index].id === filmeId) {
-				filme = props.filmes[index];
+		for (let index = 0; index < props.movies.length; index++) {
+			if (props.movies[index].id === filmeId) {
+				filme = props.movies[index];
 			}
 		}
 		return filme;
@@ -100,7 +116,7 @@ export function UpdateSessao({ ...props }) {
 	return (
 		<Modal isOpen={props.isOpen}>
 			<ModalHeader className={styles['modal-header']}>
-				Sessao {props.sessao.id}
+				Sessao {props.session.id}
 			</ModalHeader>
 			<ModalBody>
 				<Form>
@@ -110,12 +126,12 @@ export function UpdateSessao({ ...props }) {
 							<Input
 								type="select"
 								onChange={getFilmeId}
-								defaultValue={props.sessao.filme.id}
+								defaultValue={props.session.movie.id}
 							>
 								<option value="0"></option>
-								{props.filmes.map((filme: FilmeType) => (
-									<option key={filme.id} value={filme.id}>
-										{filme.titulo}
+								{props.movies.map((movie: MovieType) => (
+									<option key={movie.id} value={movie.id}>
+										{movie.title}
 									</option>
 								))}
 							</Input>
@@ -125,37 +141,23 @@ export function UpdateSessao({ ...props }) {
 							<Input
 								type="select"
 								onChange={getSalaId}
-								defaultValue={props.sessao.sala.id}
+								defaultValue={props.session.room.id}
 							>
 								<option value="0"></option>
-								{props.salas.map((sala: SalaType) => (
-									<option key={sala.id} value={sala.id}>
-										Sala {sala.id}
+								{props.rooms.map((room: RoomType) => (
+									<option key={room.id} value={room.id}>
+										{room.name}
 									</option>
 								))}
 							</Input>
 						</div>
 						<div className={styles['modal-select-datetime']}>
 							<Label>Hora e Data de Inicio</Label>
-							<Input type="datetime-local" onChange={getInit} />
-							<FormText color="muted">
-								{`Sessão atual-> Inicio: ${inicio.toLocaleDateString()} - ${
-									inicio.getHours() < 10
-										? '0' + inicio.getHours()
-										: inicio.getHours()
-								}: ${
-									inicio.getMinutes() < 10
-										? '0' + inicio.getMinutes()
-										: inicio.getMinutes()
-								} | 
-                Fim: ${fim.toLocaleDateString()} - ${
-									fim.getHours() < 10 ? '0' + fim.getHours() : fim.getHours()
-								}: ${
-									fim.getMinutes() < 10
-										? '0' + fim.getMinutes()
-										: fim.getMinutes()
-								}`}
-							</FormText>
+							<Input
+								type="datetime-local"
+								onChange={getInit}
+								defaultValue={defaultValueTime}
+							/>
 						</div>
 						<div className={styles['modal-button-container']}>
 							<Button

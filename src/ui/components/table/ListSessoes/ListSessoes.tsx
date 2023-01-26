@@ -10,41 +10,41 @@ export function ListSessoes({ ...props }) {
 	const [isOpen, setIsOpen] = useState(false);
 	const [isOpenConfirmation, setIsOpenConfirmation] = useState(false);
 	const [message, setMessage] = useState('');
-	const inicio = new Date(props.sessao.init);
-	const fim = new Date(props.sessao.finish);
+	const init = new Date(props.session.init);
+	const finish = new Date(props.session.finish);
 
 	function confirmDelete() {
-		setMessage(`Quer mesmo deletar a Sessão ${props.sessao.id}?`);
+		setMessage(`Quer mesmo deletar a Sessão ${props.session.id}?`);
 		setIsOpenConfirmation(true);
 	}
 
 	function updateSessao(salaId: number, filmeId: number, init: string) {
-		props.updateSessao(salaId, filmeId, init, props.sessao.id);
+		props.updateSessao(salaId, filmeId, init, props.session.id);
 	}
 
 	function deleteSessao() {
-		props.deleteSessao(props.sessao.id);
+		props.deleteSessao(props.session.id);
 	}
 
 	return (
 		<>
 			<th scope="row"></th>
-			<td>Sessao {props.sessao.id}</td>
-			<td>{props.sessao.filme.titulo}</td>
-			<td>{`${inicio.toLocaleDateString()} - ${
-				inicio.getHours() < 10 ? '0' + inicio.getHours() : inicio.getHours()
+			<td>Sessao {props.session.id}</td>
+			<td>{props.session.movie.title}</td>
+			<td>{`${init.toLocaleDateString()} - ${
+				init.getHours() < 10 ? '0' + init.getHours() : init.getHours()
 			}: ${
-				inicio.getMinutes() < 10
-					? '0' + inicio.getMinutes()
-					: inicio.getMinutes()
+				init.getMinutes() < 10 ? '0' + init.getMinutes() : init.getMinutes()
 			}`}</td>
-			<td>{`${fim.toLocaleDateString()} - ${
-				fim.getHours() < 10 ? '0' + fim.getHours() : fim.getHours()
+			<td>{`${finish.toLocaleDateString()} - ${
+				finish.getHours() < 10 ? '0' + finish.getHours() : finish.getHours()
 			}: ${
-				fim.getMinutes() < 10 ? '0' + fim.getMinutes() : fim.getMinutes()
+				finish.getMinutes() < 10
+					? '0' + finish.getMinutes()
+					: finish.getMinutes()
 			}`}</td>
-			<td>Sala {props.sessao.sala.id}</td>
-			<td>{props.sessao.status}</td>
+			<td>{props.session.room.name}</td>
+			<td>{props.session.status}</td>
 			<td>
 				<Button
 					color="none"
@@ -69,9 +69,9 @@ export function ListSessoes({ ...props }) {
 						updateSessao={updateSessao}
 						isOpen={isOpen}
 						setIsOpen={setIsOpen}
-						sessao={props.sessao}
-						filmes={props.filmes}
-						salas={props.salas}
+						session={props.session}
+						movies={props.movies}
+						rooms={props.rooms}
 					/>
 				</Button>
 			</td>

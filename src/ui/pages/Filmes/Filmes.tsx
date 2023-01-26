@@ -4,12 +4,12 @@ import { ThreeCircles } from 'react-loader-spinner';
 import { Navigate } from 'react-router-dom';
 import { Button, Input } from 'reactstrap';
 
-import { AlertError } from '../../components/alert/Alert';
 import { CardFilmes } from '../../components/card/Filmes/CardFilmes';
 import { CreateModal } from '../../components/modal/Filmes/CreateModal/CreateModal';
 import { HeaderAdm } from '../../components/navbar/HeaderAdm/HeaderAdm';
 import styles from './Filmes.module.css';
 import { useFilmes } from './hooks/useFilmes';
+import { AlertError } from '../../components/alert/Alert/Alert';
 
 export function Filmes({ ...props }) {
 	const {

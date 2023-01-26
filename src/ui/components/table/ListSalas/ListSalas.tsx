@@ -1,8 +1,9 @@
 import { useState } from 'react';
-import { VscTrash } from 'react-icons/vsc';
+import { VscEdit, VscTrash } from 'react-icons/vsc';
 import { Button } from 'reactstrap';
 
 import { Confirmation } from '../../modal/Confirmation/Confirmation';
+import { UpdateSala } from '../../modal/Salas/UpdateSala/UpdateSala';
 import styles from './ListSalas.module.css';
 
 export function ListSalas({ ...props }) {
@@ -14,13 +15,17 @@ export function ListSalas({ ...props }) {
 		setIsOpenConfirmation(true);
 	}
 
+	function updateSala(name: string) {
+		props.updateSala(props.sala.id, name);
+	}
+
 	function removeSala() {
 		props.removeSala(props.sala.id);
 	}
 	return (
 		<>
 			<th scope="row"></th>
-			<td>Sala {props.sala.id}</td>
+			<td>{props.sala.name}</td>
 			<td>{props.sala.status}</td>
 			<td>
 				<Button
@@ -36,6 +41,22 @@ export function ListSalas({ ...props }) {
 						action={removeSala}
 					/>
 				</Button>
+				<Button
+					color="none"
+					className={styles['btn-edit']}
+					onClick={() => props.setIsOpenUpdate(true)}
+				>
+					<VscEdit color="black" className={styles['icon']} />
+				</Button>
+				<UpdateSala
+					isOpen={props.isOpenUpdate}
+					setIsOpen={props.setIsOpenUpdate}
+					updateSala={updateSala}
+					sala={props.sala.name}
+					error={props.error}
+					setError={props.setError}
+					errorMessage={props.errorMessage}
+				/>
 			</td>
 		</>
 	);

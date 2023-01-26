@@ -9,11 +9,11 @@ import {
 	CardTitle
 } from 'reactstrap';
 
-import { FilmeSessaoType } from '../../../../types/filmeSessaoType';
+import { MovieSessionsType } from '../../../../types/movieSessionsType';
 import { FilmeSessaoModal } from '../../modal/Home/FilmeSessaoModal/FilmeSessaoModal';
 import styles from './CardFilmes.module.css';
 
-export function CardFilmes(props: FilmeSessaoType) {
+export function CardFilmes(props: MovieSessionsType) {
 	const [isOpen, setIsOpen] = useState(false);
 
 	function toggleModal() {
@@ -25,36 +25,36 @@ export function CardFilmes(props: FilmeSessaoType) {
 			<Card className={styles['card']}>
 				<CardImg
 					className={styles['card-img']}
-					src={props.filme.linkImagem}
-					alt={props.filme.titulo}
+					src={props.movie.imageLink}
+					alt={props.movie.title}
 				/>
 				<CardBody>
 					<CardTitle className={styles['card-title']}>
-						{props.filme.titulo}{' '}
+						{props.movie.title}{' '}
 					</CardTitle>
 					<CardSubtitle className={styles['card-subtitle']}>
-						<strong>Gênero:</strong>
+						<strong>Tags:</strong>
 					</CardSubtitle>
 					<CardText className={styles['card-tags']}>
-						{props.filme.tags.map((tag) => (
+						{props.movie.tags.map((tag) => (
 							<p key={tag.id} className={styles['card-tags-text']}>
 								{tag.tag}
 							</p>
 						))}
 					</CardText>
 					<CardText>
-						<strong>Tempo de Filme: </strong> {props.filme.tempoDeFilme} minutos
+						<strong>Tempo de Filme: </strong> {props.movie.movieTime} minutos
 					</CardText>
 					<CardText>
-						<strong>Classificação:</strong> {props.filme.classificacao}
+						<strong>Classificação:</strong> {props.movie.classification}
 					</CardText>
 					<Button onClick={toggleModal} className={styles['card-button']}>
 						Ver Mais
 					</Button>
 					{
 						<FilmeSessaoModal
-							filme={props.filme}
-							sessoes={props.sessoes}
+							movie={props.movie}
+							session={props.sessions}
 							toggleModal={toggleModal}
 							isOpen={isOpen}
 						/>

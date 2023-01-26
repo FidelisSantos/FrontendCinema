@@ -4,25 +4,25 @@ import { ThreeCircles } from 'react-loader-spinner';
 import { Navigate } from 'react-router-dom';
 import { Button, Input, Table } from 'reactstrap';
 
-import { AlertError } from '../../components/alert/Alert';
 import { CreateSessao } from '../../components/modal/Sessao/CreateSessao/CreateSessao';
 import { HeaderAdm } from '../../components/navbar/HeaderAdm/HeaderAdm';
 import { ListSessoes } from '../../components/table/ListSessoes/ListSessoes';
 import { useSessao } from './hooks/useSessao';
 import styles from './Sessao.module.css';
+import { AlertError } from '../../components/alert/Alert/Alert';
 
 export function Sessao({ ...props }) {
 	const {
 		loading,
-		sessoes,
+		sessions,
 		error,
 		setError,
 		getSessoesList,
 		isOpen,
 		setIsOpen,
 		deleteSessao,
-		salas,
-		filmes,
+		rooms,
+		movies,
 		createSessao,
 		updateSessao,
 		errorMessage,
@@ -115,8 +115,8 @@ export function Sessao({ ...props }) {
 									<CreateSessao
 										setIsOpen={setIsOpen}
 										isOpen={isOpen}
-										filmes={filmes}
-										salas={salas}
+										movies={movies}
+										rooms={rooms}
 										createSessao={createSessao}
 									/>
 									<th>Sessões</th>
@@ -135,9 +135,9 @@ export function Sessao({ ...props }) {
 												disabled={isDisabled}
 											>
 												<option value="0"> Todas Salas</option>
-												{salas.map((sala) => (
-													<option key={sala.id} value={sala.id}>
-														Sala {sala.id}
+												{rooms.map((room) => (
+													<option key={room.id} value={room.id}>
+														{room.name}
 													</option>
 												))}
 											</Input>
@@ -157,14 +157,14 @@ export function Sessao({ ...props }) {
 								</tr>
 							</thead>
 							<tbody>
-								{sessoes.map((sessao) => (
-									<tr key={sessao.id}>
+								{sessions.map((session) => (
+									<tr key={session.id}>
 										<ListSessoes
-											sessao={sessao}
+											session={session}
 											deleteSessao={deleteSessao}
 											updateSessao={updateSessao}
-											filmes={filmes}
-											salas={salas}
+											movies={movies}
+											rooms={rooms}
 										/>
 									</tr>
 								))}

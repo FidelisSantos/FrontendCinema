@@ -31,7 +31,7 @@ export function UpdateTag({ ...props }) {
 			<ModalBody>
 				<Form>
 					<FormGroup>
-						<Label>Genêro</Label>
+						<Label>Tag</Label>
 						<Input
 							type="text"
 							placeholder="Informe o nome do Gênero"

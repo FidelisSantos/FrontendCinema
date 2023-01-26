@@ -1,14 +1,15 @@
 import { api } from '../../../../api/api';
-import { FilmeSessaoType } from '../../../../types/filmeSessaoType';
+import { MovieSessionsType } from '../../../../types/movieSessionsType';
 
 export const homeService = {
 	getFilmesSessoes: async () => {
 		const data = await api
-			.get<FilmeSessaoType[]>('filmesessao')
+			.get<MovieSessionsType[]>('filmesessao')
 			.then((response) => response.data)
 			.catch(() => {
 				return null;
 			});
+		console.log(data);
 		return data;
 	}
 };

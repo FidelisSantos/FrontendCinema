@@ -1,0 +1,16 @@
+.modal-header {
+  display: flex;
+  color: white;
+  background-color: black;
+  justify-content: center;
+}
+
+.modal-button{
+  background-color: black;
+  margin: 8px;
+}
+
+.modal-button:hover{
+  transition: 0.7s;
+  background-color: rgb(27, 27, 27);
+}

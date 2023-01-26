@@ -1,14 +1,15 @@
 import { useState } from 'react';
 import uuidv4 from 'uuidv4';
 
-import { FilmeType } from '../../../../types/filmeType';
-import { PostFilmeType } from '../../../../types/postFilmeType';
+import { MovieType } from '../../../../types/movieType';
+import { PostFilmeType } from '../../../../types/postMovieType';
+import { RoomType } from '../../../../types/roomType';
 import { TagType } from '../../../../types/tagType';
 import { tagService } from '../../Tags/service/tagService';
 import { filmesService } from '../service/filmesService';
 
 export function useFilmes() {
-	const [filmes, setFilmes] = useState<FilmeType[]>([]);
+	const [filmes, setFilmes] = useState<MovieType[]>([]);
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState(false);
 	const [errorMessage, setErrorMessage] = useState('');
@@ -16,7 +17,7 @@ export function useFilmes() {
 	const [tags, setTags] = useState<TagType[]>([]);
 	const imagesTypes = ['image/jpeg', 'image/jpg', 'image/png'];
 	const [isDisabled, setIsDisabled] = useState(false);
-	const filmeSearch: FilmeType[] = [];
+	const filmeSearch: MovieType[] = [];
 	const [search, setSearch] = useState('');
 
 	const getFilmesList = async () => {
@@ -112,11 +113,11 @@ export function useFilmes() {
 			return;
 		}
 		const body: PostFilmeType = {
-			titulo,
-			linkImagem: imagem,
-			descricao,
-			tempoDeFilme,
-			classificacao,
+			title: titulo,
+			imageLink: imagem,
+			description: descricao,
+			movieTime: tempoDeFilme,
+			classification: classificacao,
 			tags
 		};
 		const token = `Bearer ${localStorage.getItem('token')}`;
@@ -155,11 +156,11 @@ export function useFilmes() {
 		setErrorMessage('');
 		setLoading(true);
 		const body: PostFilmeType = {
-			titulo,
-			linkImagem: imagem,
-			descricao,
-			tempoDeFilme,
-			classificacao,
+			title: titulo,
+			imageLink: imagem,
+			description: descricao,
+			movieTime: tempoDeFilme,
+			classification: classificacao,
 			tags
 		};
 		const token = `Bearer ${localStorage.getItem('token')}`;
@@ -288,7 +289,7 @@ export function useFilmes() {
 		const searchFilme = search;
 		filmes.forEach((filme) => {
 			if (
-				filme.titulo
+				filme.title
 					.toLocaleLowerCase()
 					.includes(searchFilme.toLocaleLowerCase()) &&
 				filmeSearch.findIndex((filmeSearch) => filmeSearch.id == filme.id) < 0

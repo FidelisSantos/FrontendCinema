@@ -1,14 +1,14 @@
 import { useEffect, useState } from 'react';
 
-import { FilmeSessaoType } from '../../../../types/filmeSessaoType';
+import { MovieSessionsType } from '../../../../types/movieSessionsType';
 import { homeService } from '../service/homeService';
 
 export function useHome() {
-	const [filmeSessoes, setSessoes] = useState<FilmeSessaoType[]>([]);
+	const [movieSessions, setMovieSessions] = useState<MovieSessionsType[]>([]);
 	const [loading, setLoading] = useState<boolean>(true);
 	const [search, setSearch] = useState('');
 	const [isDisabled, setIsDisabled] = useState(false);
-	const filmeSessoesSearch: FilmeSessaoType[] = [];
+	const movieSessionsSearch: MovieSessionsType[] = [];
 	const [error, setError] = useState(false);
 	const [errorMessage, setErrorMessage] = useState('');
 
@@ -23,7 +23,7 @@ export function useHome() {
 		const getSessoes = await homeService.getFilmesSessoes();
 		if (getSessoes != null) {
 			if (getSessoes.length > 0) {
-				setSessoes(getSessoes);
+				setMovieSessions(getSessoes);
 				setErrorMessage('');
 				setError(false);
 			} else {
@@ -44,45 +44,45 @@ export function useHome() {
 			return;
 		}
 		const searchFilme = search;
-		filmeSessoes.forEach((sessao) => {
+		movieSessions.forEach((sessao) => {
 			if (
-				sessao.filme.titulo
+				sessao.movie.title
 					.toLocaleLowerCase()
 					.includes(searchFilme.toLocaleLowerCase()) &&
-				filmeSessoesSearch.findIndex(
-					(filme) => filme.filme.id == sessao.filme.id
+				movieSessionsSearch.findIndex(
+					(filme) => filme.movie.id == sessao.movie.id
 				) < 0
 			) {
-				filmeSessoesSearch.push(sessao);
+				movieSessionsSearch.push(sessao);
 			}
-			sessao.filme.tags.forEach((tag) => {
+			sessao.movie.tags.forEach((tag) => {
 				if (
 					tag.tag
 						.toLocaleLowerCase()
 						.includes(searchFilme.toLocaleLowerCase()) &&
-					filmeSessoesSearch.findIndex(
-						(filme) => filme.filme.id == sessao.filme.id
+					movieSessionsSearch.findIndex(
+						(filme) => filme.movie.id == sessao.movie.id
 					) < 0
 				) {
-					filmeSessoesSearch.push(sessao);
+					movieSessionsSearch.push(sessao);
 				}
 			});
 		});
-		if (filmeSessoesSearch.length === 0) {
+		if (movieSessionsSearch.length === 0) {
 			setError(true);
 			setErrorMessage('Nenhum filme encontrado');
-		} else setSessoes(filmeSessoesSearch);
+		} else setMovieSessions(movieSessionsSearch);
 
 		setIsDisabled(true);
 	};
 
 	return {
-		filmeSessoes,
+		movieSessions,
 		loading,
 		getFilmeSessoes,
 		search,
 		setSearch,
-		setSessoes,
+		setMovieSessions,
 		searchFilmeSessao,
 		isDisabled,
 		error,

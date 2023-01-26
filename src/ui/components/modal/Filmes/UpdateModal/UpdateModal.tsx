@@ -20,7 +20,6 @@ export function UpdateModal({ ...props }) {
 			imagem,
 			classificacao
 		);
-		toogle();
 	}
 
 	function updateUrl(
@@ -39,7 +38,6 @@ export function UpdateModal({ ...props }) {
 			newImage,
 			classificacao
 		);
-		toogle();
 	}
 
 	function toogle() {
@@ -48,7 +46,9 @@ export function UpdateModal({ ...props }) {
 
 	return (
 		<Modal isOpen={props.isOpen}>
-			<ModalHeader className={styles['modal-header']}>Modal title</ModalHeader>
+			<ModalHeader className={styles['modal-header']}>
+				Atualizar Filme
+			</ModalHeader>
 			<ModalBody>
 				<UpdateForm
 					updateFilme={updateFilme}

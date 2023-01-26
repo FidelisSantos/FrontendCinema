@@ -4,7 +4,8 @@ import { ThreeCircles } from 'react-loader-spinner';
 import { Navigate } from 'react-router-dom';
 import { Table } from 'reactstrap';
 
-import { AlertError } from '../../components/alert/Alert';
+import { AlertError } from '../../components/alert/Alert/Alert';
+import { CreateSala } from '../../components/modal/Salas/CreateSala/CreateSala';
 import { HeaderAdm } from '../../components/navbar/HeaderAdm/HeaderAdm';
 import { ListSalas } from '../../components/table/ListSalas/ListSalas';
 import { useSala } from './hooks/useSala';
@@ -15,12 +16,19 @@ export function Salas({ ...props }) {
 		salas,
 		loading,
 		error,
+		salaName,
+		setSalaName,
 		setError,
+		isOpenCreate,
+		setIsOpenCreate,
+		isOpenUpdate,
+		setIsOpenUpdate,
 		getSalaList,
 		createSala,
 		deleteSala,
 		errorMessage,
-		setErrorMessage
+		setErrorMessage,
+		updateSala
 	} = useSala();
 
 	useEffect(() => {
@@ -102,10 +110,20 @@ export function Salas({ ...props }) {
 							<thead>
 								<tr>
 									<th>
-										<button onClick={createSala}>
+										<button onClick={() => setIsOpenCreate(true)}>
 											<VscAdd />
 										</button>
 									</th>
+									<CreateSala
+										isOpen={isOpenCreate}
+										setIsOpen={setIsOpenCreate}
+										createSala={createSala}
+										salaName={salaName}
+										setSalaName={setSalaName}
+										error={error}
+										setError={setError}
+										errorMessage={errorMessage}
+									/>
 									<th>Salas</th>
 									<th>Status</th>
 									<th></th>
@@ -114,7 +132,16 @@ export function Salas({ ...props }) {
 							<tbody>
 								{salas.map((sala) => (
 									<tr key={sala.id}>
-										<ListSalas sala={sala} removeSala={removeSala} />{' '}
+										<ListSalas
+											sala={sala}
+											removeSala={removeSala}
+											updateSala={updateSala}
+											isOpenUpdate={isOpenUpdate}
+											setIsOpenUpdate={setIsOpenUpdate}
+											error={error}
+											setError={setError}
+											errorMessage={errorMessage}
+										/>{' '}
 									</tr>
 								))}
 							</tbody>

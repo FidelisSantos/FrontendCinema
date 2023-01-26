@@ -77,12 +77,12 @@ export function CardFilmes({ ...props }) {
 		<div className={styles['card-container']}>
 			<Card className={styles['card']}>
 				<CardTitle className={styles['card-title']}>
-					{props.filme.titulo}
+					{props.filme.title}
 				</CardTitle>
 				<CardImg
 					className={styles['card-img']}
-					src={props.filme.linkImagem}
-					alt={props.filme.titulo}
+					src={props.filme.imageLink}
+					alt={props.filme.title}
 				/>
 				<CardBody>
 					<CardSubtitle className={styles['card-subtitle']}>
@@ -98,15 +98,15 @@ export function CardFilmes({ ...props }) {
 						</CardText>
 					</div>
 					<CardText>
-						<strong>Tempo de Filme: </strong> {props.filme.tempoDeFilme} minutos
+						<strong>Tempo de Filme: </strong> {props.filme.movieTime} minutos
 					</CardText>
 					<CardText>
-						<strong>Classificação:</strong> {props.filme.classificacao}
+						<strong>Classificação:</strong> {props.filme.classification}
 					</CardText>
 					<CardSubtitle className={styles['card-subtitle']}>
 						<strong>Descrição:</strong>
 					</CardSubtitle>
-					<CardText>{props.filme.descricao}</CardText>
+					<CardText>{props.filme.description}</CardText>
 				</CardBody>
 				<CardFooter className={styles['card-buttons']}>
 					<Button

@@ -1,12 +1,12 @@
 import { AxiosError } from 'axios';
 
 import { api } from '../../../../api/api';
-import { SalaType } from '../../../../types/salaType';
+import { RoomType } from '../../../../types/roomType';
 
 export const salaService = {
 	getSalaList: async (token: string) => {
 		const salas = await api
-			.get<SalaType[]>('sala', { headers: { Authorization: token } })
+			.get<RoomType[]>('sala', { headers: { Authorization: token } })
 			.then((response) => {
 				return response.data;
 			})
@@ -20,24 +20,52 @@ export const salaService = {
 		return salas;
 	},
 
-	postSala: async (token: string) => {
+	postSala: async (name: string, token: string) => {
 		const isCreated = await api
-			.post<SalaType>('sala', '', { headers: { Authorization: token } })
+			.post<RoomType>(
+				'sala',
+				{ name: name },
+				{ headers: { Authorization: token } }
+			)
 			.then(() => true)
-			.catch((error: AxiosError) => {
+			.catch((error) => {
 				if (error.response != null && error.response.status === 401) {
 					return 'Unauthorized';
-				} else {
+				} else if (error.response === null || error.response.status === 500) {
 					return false;
+				} else {
+					return error.response.data.message;
 				}
 			});
 
 		return isCreated;
 	},
 
+	updateSala: async (id: number, name: string, token: string) => {
+		const isUpdate = await api
+			.patch<RoomType>(
+				`sala/${id}`,
+				{ name: name },
+				{ headers: { Authorization: token } }
+			)
+			.then(() => true)
+			.catch((error) => {
+				console.log(error.response);
+				if (error.response.status === 401) {
+					return 'Unauthorized';
+				} else if (error.response.status === 500) {
+					return false;
+				} else {
+					return error.response.data.message;
+				}
+			});
+
+		return isUpdate;
+	},
+
 	deleteSala: async (token: string, id: number) => {
 		const isDeleted = await api
-			.delete<SalaType>(`sala/${id}`, { headers: { Authorization: token } })
+			.delete<RoomType>(`sala/${id}`, { headers: { Authorization: token } })
 			.then(() => true)
 			.catch((error: any) => {
 				if (error.response != null && error.response.status === 400) {

@@ -1,22 +1,22 @@
 import { FormEvent, useState } from 'react';
 
-import { FilmeType } from '../../../../types/filmeType';
-import { PostSessaoType } from '../../../../types/postSessaoType';
-import { SalaType } from '../../../../types/salaType';
-import { SessaoType } from '../../../../types/sessaoType';
+import { MovieType } from '../../../../types/movieType';
+import { PostSessaoType } from '../../../../types/postSessionType';
+import { RoomType } from '../../../../types/roomType';
+import { SessionType } from '../../../../types/sessionType';
 import { filmesService } from '../../Filmes/service/filmesService';
 import { salaService } from '../../Salas/service/salasService';
 import { sessaoService } from '../service/sessaoService';
 
 export function useSessao() {
 	const [loading, setLoading] = useState<boolean>(true);
-	const [sessoes, setSessoes] = useState<SessaoType[]>([]);
+	const [sessions, setSessions] = useState<SessionType[]>([]);
 	const [error, setError] = useState(false);
 	const [errorMessage, setErrorMessage] = useState('');
 	const [isOpen, setIsOpen] = useState(false);
-	const [salas, setSalas] = useState<SalaType[]>([]);
-	const [filmes, setFilmes] = useState<FilmeType[]>([]);
-	const sessoesSearch: SessaoType[] = [];
+	const [rooms, setRooms] = useState<RoomType[]>([]);
+	const [movies, setMovies] = useState<MovieType[]>([]);
+	const sessionsSearch: SessionType[] = [];
 	const [isDisabled, setIsDisabled] = useState(false);
 
 	const getSessoesList = async () => {
@@ -31,7 +31,7 @@ export function useSessao() {
 			} else if (response == 'Error') {
 				setErrorMessage('Erro ao Listar as sessões');
 				setError(true);
-			} else setSessoes(response);
+			} else setSessions(response);
 			await getSalaList();
 			await getFilmesList();
 		} else {
@@ -50,7 +50,7 @@ export function useSessao() {
 			} else if (response == 'Error') {
 				setErrorMessage('Erro ao Listar as sessões');
 				setError(true);
-			} else setSalas(response);
+			} else setRooms(response);
 		} else setErrorMessage('token');
 	};
 
@@ -64,7 +64,7 @@ export function useSessao() {
 			} else if (response == 'Error') {
 				setErrorMessage('Erro ao Listar as sessões');
 				setError(true);
-			} else setFilmes(response);
+			} else setMovies(response);
 		} else {
 			setErrorMessage('token');
 		}
@@ -101,8 +101,8 @@ export function useSessao() {
 		init: string
 	) => {
 		const body: PostSessaoType = {
-			salaId,
-			filmeId,
+			roomId: salaId,
+			movieId: filmeId,
 			init
 		};
 		setErrorMessage('');
@@ -136,8 +136,8 @@ export function useSessao() {
 		id: number
 	) => {
 		const body: PostSessaoType = {
-			salaId,
-			filmeId,
+			roomId: salaId,
+			movieId: filmeId,
 			init
 		};
 		setErrorMessage('');
@@ -171,18 +171,18 @@ export function useSessao() {
 			getSessoesList();
 			return;
 		}
-		sessoes.forEach((sessao) => {
-			console.log(sessao);
-			if (sessao.sala.id === salaId) {
-				sessoesSearch.push(sessao);
+		sessions.forEach((session) => {
+			console.log(session);
+			if (session.movie.id === salaId) {
+				sessionsSearch.push(session);
 			}
 		});
-		if (sessoesSearch.length === 0) {
+		if (sessionsSearch.length === 0) {
 			setError(true);
 			setErrorMessage('Nenhuma sessão encontrada nessa sala');
 			e.currentTarget.value = '0';
 		} else {
-			setSessoes(sessoesSearch);
+			setSessions(sessionsSearch);
 			setIsDisabled(true);
 		}
 		setLoading(false);
@@ -190,15 +190,15 @@ export function useSessao() {
 
 	return {
 		loading,
-		sessoes,
+		sessions,
 		error,
 		setError,
 		getSessoesList,
 		isOpen,
 		setIsOpen,
 		deleteSessao,
-		salas,
-		filmes,
+		rooms,
+		movies,
 		createSessao,
 		updateSessao,
 		errorMessage,

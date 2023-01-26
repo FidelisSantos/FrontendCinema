@@ -1,16 +1,16 @@
 import { ThreeCircles } from 'react-loader-spinner';
 import { Button, Input } from 'reactstrap';
 
-import { AlertError } from '../../components/alert/Alert';
 import { CardFilmes } from '../../components/card/Home/CardFilmes';
 import { HeaderAdm } from '../../components/navbar/HeaderAdm/HeaderAdm';
 import { HeaderVisitor } from '../../components/navbar/HeaderVisitor/HeaderVisitor';
 import styles from './Home.module.css';
 import { useHome } from './hooks/useHome';
+import { AlertError } from '../../components/alert/Alert/Alert';
 
 export function Home({ ...props }) {
 	const {
-		filmeSessoes,
+		movieSessions,
 		loading,
 		getFilmeSessoes,
 		search,
@@ -126,10 +126,10 @@ export function Home({ ...props }) {
 					</div>
 					{errorMessage != 'Nenhum filme encontrado' && (
 						<div className={styles['card-container']}>
-							{filmeSessoes != null &&
-								filmeSessoes.map((filmeSessao) => (
-									<div key={filmeSessao.filme.id}>
-										<CardFilmes {...filmeSessao} />
+							{movieSessions != null &&
+								movieSessions.map((movieSession) => (
+									<div key={movieSession.movie.id}>
+										<CardFilmes {...movieSession} />
 									</div>
 								))}
 						</div>

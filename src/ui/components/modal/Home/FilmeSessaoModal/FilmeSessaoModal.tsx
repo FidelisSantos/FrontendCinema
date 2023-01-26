@@ -1,8 +1,8 @@
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 
-import { SessaoFilmeSessao } from '../../../../../types/sessaoFilmeSessaoType';
 import styles from './FilmeSessaoModal.module.css';
 import { HomeModalBodySessao } from './FilmeSessaoModalStatus/FilmeSessaoModalStatus';
+import { SessionsMovieType } from '../../../../../types/sessionsMovieType';
 
 export function FilmeSessaoModal({ ...props }) {
 	function toggleModal() {
@@ -11,31 +11,31 @@ export function FilmeSessaoModal({ ...props }) {
 	return (
 		<Modal isOpen={props.isOpen}>
 			<ModalHeader className={styles['modal-header']}>
-				{props.filme.titulo.toUpperCase()}
+				{props.movie.title.toUpperCase()}
 			</ModalHeader>
 			<ModalBody>
 				<fieldset>
 					<legend className={styles['legend-text']}>Descrição:</legend>
 					<div className={styles['descricao-container']}>
-						{props.filme.descricao}
+						{props.movie.description}
 					</div>
 				</fieldset>
 				<fieldset>
 					<legend className={styles['legend-text']}>Próximas Sessoes:</legend>
-					{props.sessoes.map((sessao: SessaoFilmeSessao) => (
-						<div key={sessao.sessaoId} className={'sessao-container'}>
-							{sessao.status == 'Aguardando' && (
-								<HomeModalBodySessao {...sessao} />
+					{props.session.map((session: SessionsMovieType) => (
+						<div key={session.sessionId} className={'sessao-container'}>
+							{session.status == 'Aguardando' && (
+								<HomeModalBodySessao {...session} />
 							)}
 						</div>
 					))}
 				</fieldset>
 				<fieldset>
 					<legend className={styles['legend-text']}>Sessoes Rodando:</legend>
-					{props.sessoes.map((sessao: SessaoFilmeSessao) => (
-						<div key={sessao.sessaoId}>
-							{sessao.status == 'Rodando' && (
-								<HomeModalBodySessao {...sessao} />
+					{props.session.map((session: SessionsMovieType) => (
+						<div key={session.sessionId}>
+							{session.status == 'Rodando' && (
+								<HomeModalBodySessao {...session} />
 							)}
 						</div>
 					))}
@@ -44,10 +44,10 @@ export function FilmeSessaoModal({ ...props }) {
 					<legend className={styles['legend-text']}>
 						Sessoes Finalizadas:
 					</legend>
-					{props.sessoes.map((sessao: SessaoFilmeSessao) => (
-						<div key={sessao.sessaoId}>
-							{sessao.status == 'Terminado' && (
-								<HomeModalBodySessao {...sessao} />
+					{props.session.map((session: SessionsMovieType) => (
+						<div key={session.sessionId}>
+							{session.status == 'Terminado' && (
+								<HomeModalBodySessao {...session} />
 							)}
 						</div>
 					))}

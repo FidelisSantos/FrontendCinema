@@ -8,14 +8,16 @@ import styles from './UpdateForm.module.css';
 
 export function UpdateForm({ ...props }) {
 	const [hourMinute, setHourMinute] = useState('');
-	const [tempoFilme, setTempoFilme] = useState(props.filme.tempoDeFilme);
-	const [titulo, setTitulo] = useState(props.filme.titulo);
-	const [descricao, setDescricao] = useState(props.filme.descricao);
+	const [tempoFilme, setTempoFilme] = useState(props.filme.movieTime);
+	const [titulo, setTitulo] = useState(props.filme.title);
+	const [descricao, setDescricao] = useState(props.filme.description);
 	const [fileImg, setFileImg] = useState<File>();
-	const [linkImg, setLinkImg] = useState(props.filme.linkImagem);
+	const [linkImg, setLinkImg] = useState(props.filme.imageLink);
 	const [genero, setGenero] = useState<number[]>([]);
 	const [tempoFilmeAtual, setTempoFilmeAtual] = useState('');
-	const [classificacao, setClassificacao] = useState(props.filme.classificacao);
+	const [classificacao, setClassificacao] = useState(
+		props.filme.classification
+	);
 
 	useEffect(() => {
 		const formatteHour = () => {
@@ -107,14 +109,12 @@ export function UpdateForm({ ...props }) {
 					placeholder="Informe o tempo do filme(ex 01:50)"
 					id="tempoFilme"
 					onChange={maskHours}
-					defaultValue={hourMinute}
-					value={hourMinute}
+					defaultValue={tempoFilmeAtual}
 					required
 				/>
 			</FormGroup>
-			<FormText color="muted">Tempo atual de filme {tempoFilmeAtual}</FormText>
 			<FormGroup className={styles['form-tags']}>
-				<Label>Selecione Gênero </Label>
+				<Label>Selecione as Tags </Label>
 				<div className={styles['form-tags-options']}>
 					{props.tags.map((tag: TagType, index: number) => (
 						<ListGenero
@@ -143,7 +143,7 @@ export function UpdateForm({ ...props }) {
 					<Input
 						type="select"
 						onChange={getClassificacao}
-						defaultValue={props.filme.classificacao}
+						defaultValue={props.filme.classification}
 					>
 						<option value="0"></option>
 						{classificacaoList.map((classificacao) => (
