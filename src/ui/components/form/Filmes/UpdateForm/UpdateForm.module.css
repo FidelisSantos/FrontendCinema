@@ -1,0 +1,26 @@
+.form-container {
+  height: 500px;
+  width: 100%;
+  overflow: auto;
+}
+
+.form-tags-options {
+  max-height: 150px;
+  width: 100%;
+  overflow: auto;
+}
+
+.tags-label-button {
+  display: flex;
+  justify-content: space-between;
+}
+
+.modal-button{
+  background-color: black;
+  margin: 8px;
+}
+
+.modal-button:hover{
+  transition: 0.7s;
+  background-color: rgb(27, 27, 27);
+}
