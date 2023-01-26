@@ -114,8 +114,11 @@ export function CreateForm({ ...props }) {
 			<FormGroup>
 				<div className={styles['modal-select-sala']}>
 					<Label>Classificação</Label>
-					<Input type="select" onChange={getClassificacao} defaultValue={0}>
-						<option value="0"></option>
+					<Input
+						type="select"
+						onChange={getClassificacao}
+						defaultValue={classificacaoList[0]}
+					>
 						{classificacaoList.map((classificacao) => (
 							<option key={classificacao} value={classificacao}>
 								{classificacao}

@@ -4,7 +4,7 @@ import { ThreeCircles } from 'react-loader-spinner';
 import { Navigate } from 'react-router-dom';
 import { Table } from 'reactstrap';
 
-import { AlertError } from '../../components/alert/Alert/Alert';
+import { AlertError } from '../../components/alert/Alert/AlertModal';
 import { CreateSala } from '../../components/modal/Salas/CreateSala/CreateSala';
 import { HeaderAdm } from '../../components/navbar/HeaderAdm/HeaderAdm';
 import { ListSalas } from '../../components/table/ListSalas/ListSalas';
@@ -21,8 +21,6 @@ export function Salas({ ...props }) {
 		setError,
 		isOpenCreate,
 		setIsOpenCreate,
-		isOpenUpdate,
-		setIsOpenUpdate,
 		getSalaList,
 		createSala,
 		deleteSala,
@@ -136,8 +134,6 @@ export function Salas({ ...props }) {
 											sala={sala}
 											removeSala={removeSala}
 											updateSala={updateSala}
-											isOpenUpdate={isOpenUpdate}
-											setIsOpenUpdate={setIsOpenUpdate}
 											error={error}
 											setError={setError}
 											errorMessage={errorMessage}

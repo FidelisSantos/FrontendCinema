@@ -172,7 +172,6 @@ export function useSessao() {
 			return;
 		}
 		sessions.forEach((session) => {
-			console.log(session);
 			if (session.movie.id === salaId) {
 				sessionsSearch.push(session);
 			}

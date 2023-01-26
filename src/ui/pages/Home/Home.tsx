@@ -6,7 +6,7 @@ import { HeaderAdm } from '../../components/navbar/HeaderAdm/HeaderAdm';
 import { HeaderVisitor } from '../../components/navbar/HeaderVisitor/HeaderVisitor';
 import styles from './Home.module.css';
 import { useHome } from './hooks/useHome';
-import { AlertError } from '../../components/alert/Alert/Alert';
+import { AlertError } from '../../components/alert/Alert/AlertModal';
 
 export function Home({ ...props }) {
 	const {

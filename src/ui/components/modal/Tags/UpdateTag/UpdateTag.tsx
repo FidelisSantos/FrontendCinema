@@ -34,7 +34,7 @@ export function UpdateTag({ ...props }) {
 						<Label>Tag</Label>
 						<Input
 							type="text"
-							placeholder="Informe o nome do Gênero"
+							placeholder="Informe o nome da tag"
 							required
 							defaultValue={props.tag}
 							value={tag}

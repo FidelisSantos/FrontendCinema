@@ -50,7 +50,6 @@ export const salaService = {
 			)
 			.then(() => true)
 			.catch((error) => {
-				console.log(error.response);
 				if (error.response.status === 401) {
 					return 'Unauthorized';
 				} else if (error.response.status === 500) {

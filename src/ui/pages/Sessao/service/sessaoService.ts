@@ -41,7 +41,6 @@ export const sessaoService = {
 			.post('sessao', body, { headers: { Authorization: token } })
 			.then(() => true)
 			.catch((error) => {
-				console.log(error.response);
 				if (error.response && error.response.status === 401) {
 					return 'Unauthorized';
 				} else if (error.response && error.response.status === 500) {

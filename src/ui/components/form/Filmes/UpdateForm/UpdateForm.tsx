@@ -145,7 +145,6 @@ export function UpdateForm({ ...props }) {
 						onChange={getClassificacao}
 						defaultValue={props.filme.classification}
 					>
-						<option value="0"></option>
 						{classificacaoList.map((classificacao) => (
 							<option key={classificacao} value={classificacao}>
 								{classificacao}

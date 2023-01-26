@@ -9,7 +9,7 @@ import { HeaderAdm } from '../../components/navbar/HeaderAdm/HeaderAdm';
 import { ListSessoes } from '../../components/table/ListSessoes/ListSessoes';
 import { useSessao } from './hooks/useSessao';
 import styles from './Sessao.module.css';
-import { AlertError } from '../../components/alert/Alert/Alert';
+import { AlertError } from '../../components/alert/Alert/AlertModal';
 
 export function Sessao({ ...props }) {
 	const {

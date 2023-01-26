@@ -9,7 +9,6 @@ export const homeService = {
 			.catch(() => {
 				return null;
 			});
-		console.log(data);
 		return data;
 	}
 };

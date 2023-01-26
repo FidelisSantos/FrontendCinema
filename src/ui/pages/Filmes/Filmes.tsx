@@ -9,7 +9,7 @@ import { CreateModal } from '../../components/modal/Filmes/CreateModal/CreateMod
 import { HeaderAdm } from '../../components/navbar/HeaderAdm/HeaderAdm';
 import styles from './Filmes.module.css';
 import { useFilmes } from './hooks/useFilmes';
-import { AlertError } from '../../components/alert/Alert/Alert';
+import { AlertError } from '../../components/alert/Alert/AlertModal';
 
 export function Filmes({ ...props }) {
 	const {

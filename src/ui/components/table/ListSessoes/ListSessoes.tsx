@@ -64,7 +64,7 @@ export function ListSessoes({ ...props }) {
 					className={styles['btn-edit']}
 					onClick={() => setIsOpen(true)}
 				>
-					<VscEdit color="black" className={styles['icon']} />
+					<VscEdit color="white" className={styles['icon']} />
 					<UpdateSessao
 						updateSessao={updateSessao}
 						isOpen={isOpen}

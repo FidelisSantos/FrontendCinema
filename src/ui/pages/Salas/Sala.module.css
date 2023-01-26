@@ -34,9 +34,14 @@
   margin-top: 66px;
   display: flex;
   text-align: center;
-  background: linear-gradient(90deg, rgb(150, 150, 153) 0%, rgb(90, 89, 89) 35%, rgb(189, 189, 189) 100%);
 }
 
 .table-salas {
   color: black;
+}
+
+th {
+  color: rgb(233, 230, 230);
+  font-size: 2rem;
+  font-style: italic;
 }

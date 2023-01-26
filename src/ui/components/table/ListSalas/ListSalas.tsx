@@ -8,10 +8,11 @@ import styles from './ListSalas.module.css';
 
 export function ListSalas({ ...props }) {
 	const [isOpenConfirmation, setIsOpenConfirmation] = useState(false);
+	const [isOpen, setIsOpen] = useState(false);
 	const [message, setMessage] = useState('');
 
 	function confirmDelete() {
-		setMessage(`Quer mesmo deletar a Sala ${props.sala.id}?`);
+		setMessage(`Quer mesmo deletar a ${props.sala.name}?`);
 		setIsOpenConfirmation(true);
 	}
 
@@ -44,15 +45,15 @@ export function ListSalas({ ...props }) {
 				<Button
 					color="none"
 					className={styles['btn-edit']}
-					onClick={() => props.setIsOpenUpdate(true)}
+					onClick={() => setIsOpen(true)}
 				>
-					<VscEdit color="black" className={styles['icon']} />
+					<VscEdit color="white" className={styles['icon']} />
 				</Button>
 				<UpdateSala
-					isOpen={props.isOpenUpdate}
-					setIsOpen={props.setIsOpenUpdate}
+					isOpen={isOpen}
+					setIsOpen={setIsOpen}
 					updateSala={updateSala}
-					sala={props.sala.name}
+					sala={props.sala}
 					error={props.error}
 					setError={props.setError}
 					errorMessage={props.errorMessage}

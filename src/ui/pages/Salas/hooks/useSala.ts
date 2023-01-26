@@ -10,7 +10,6 @@ export function useSala() {
 	const [error, setError] = useState(false);
 	const [errorMessage, setErrorMessage] = useState('');
 	const [isOpenCreate, setIsOpenCreate] = useState(false);
-	const [isOpenUpdate, setIsOpenUpdate] = useState(false);
 
 	const getSalaList = async () => {
 		const token = `Bearer ${localStorage.getItem('token')}`;
@@ -70,7 +69,6 @@ export function useSala() {
 				setLoading(false);
 				return;
 			} else if (response === true) {
-				setIsOpenUpdate(false);
 				getSalaList();
 				return;
 			} else {
@@ -117,8 +115,6 @@ export function useSala() {
 		setError,
 		isOpenCreate,
 		setIsOpenCreate,
-		isOpenUpdate,
-		setIsOpenUpdate,
 		getSalaList,
 		createSala,
 		deleteSala,

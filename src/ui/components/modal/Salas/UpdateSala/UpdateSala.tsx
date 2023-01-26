@@ -11,14 +11,14 @@ import {
 	ModalHeader
 } from 'reactstrap';
 
-import { AlertModalError } from '../../../alert/AlertModal/AlertModal';
+import { AlertModalError } from '../../../alert/AlertModal/Alert';
 import styles from './UpdateSala.module.css';
 
 export function UpdateSala({ ...props }) {
-	const [newName, setNewName] = useState(props.name);
-
+	const [newName, setNewName] = useState();
 	function updateSala() {
 		props.updateSala(newName);
+		props.setIsOpen(true);
 	}
 	function toogle() {
 		props.setIsOpen(false);
@@ -43,12 +43,11 @@ export function UpdateSala({ ...props }) {
 						<Input
 							type="text"
 							placeholder="Informe o nome da Sala"
-							required
-							defaultValue={props.sala}
-							value={newName}
+							defaultValue={props.defaultName}
 							onChange={(e: any) => {
 								setNewName(e.target.value);
 							}}
+							required
 						/>
 						<Button className={styles['modal-button']} onClick={updateSala}>
 							Atualizar

@@ -48,7 +48,7 @@ export function ListTags({ ...props }) {
 					className={styles['btn-edit']}
 					onClick={() => setIsOpen(true)}
 				>
-					<VscEdit color="black" className={styles['icon']} />
+					<VscEdit color="white" className={styles['icon']} />
 				</Button>
 				<UpdateTag
 					isOpen={isOpen}

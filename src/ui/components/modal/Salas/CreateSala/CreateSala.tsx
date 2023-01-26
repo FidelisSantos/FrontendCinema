@@ -11,9 +11,9 @@ import {
 	ModalHeader
 } from 'reactstrap';
 
+import { AlertError } from '../../../alert/Alert/AlertModal';
+import { AlertModalError } from '../../../alert/AlertModal/Alert';
 import styles from './CreateSala.module.css';
-import { AlertError } from '../../../alert/Alert/Alert';
-import { AlertModalError } from '../../../alert/AlertModal/AlertModal';
 
 export function CreateSala({ ...props }) {
 	function createSala() {
@@ -26,16 +26,7 @@ export function CreateSala({ ...props }) {
 
 	return (
 		<Modal isOpen={props.isOpen}>
-			{!props.error && (
-				<ModalHeader className={styles['modal-header']}>Criar Sala</ModalHeader>
-			)}
-			{props.error && (
-				<AlertModalError
-					error={props.error}
-					setError={props.setError}
-					errorMessage={props.errorMessage}
-				/>
-			)}
+			<ModalHeader className={styles['modal-header']}>Criar Sala</ModalHeader>
 			<ModalBody>
 				<Form>
 					<FormGroup>
