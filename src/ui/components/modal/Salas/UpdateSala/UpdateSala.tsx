@@ -43,7 +43,7 @@ export function UpdateSala({ ...props }) {
 						<Input
 							type="text"
 							placeholder="Informe o nome da Sala"
-							defaultValue={props.defaultName}
+							defaultValue={props.sala.name}
 							onChange={(e: any) => {
 								setNewName(e.target.value);
 							}}

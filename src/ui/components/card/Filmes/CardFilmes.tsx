@@ -21,7 +21,7 @@ export function CardFilmes({ ...props }) {
 	const [message, setMessage] = useState('');
 
 	function confirmDelete() {
-		setMessage(`Quer mesmo deletar o Filme ${props.filme.titulo}?`);
+		setMessage(`Quer mesmo deletar o Filme ${props.filme.title}?`);
 		setIsOpenConfirmation(true);
 	}
 
@@ -30,7 +30,7 @@ export function CardFilmes({ ...props }) {
 	}
 
 	function removeFilme() {
-		props.deleteFilme(props.filme.id, props.filme.linkImagem);
+		props.deleteFilme(props.filme.id, props.filme.imageLink);
 	}
 
 	function updateFilme(
@@ -48,7 +48,7 @@ export function CardFilmes({ ...props }) {
 			descricao,
 			imagem,
 			props.filme.id,
-			props.filme.linkImagem,
+			props.filme.imageLink,
 			classificacao
 		);
 	}
@@ -67,7 +67,7 @@ export function CardFilmes({ ...props }) {
 			tempoDeFilme,
 			genero,
 			descricao,
-			props.filme.linkImagem,
+			props.filme.imageLink,
 			newImage,
 			classificacao
 		);

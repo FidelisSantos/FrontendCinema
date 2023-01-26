@@ -42,6 +42,7 @@ export function useSala() {
 				return;
 			} else if (response === true) {
 				setIsOpenCreate(false);
+				setSalaName('');
 				getSalaList();
 				return;
 			} else {

@@ -165,6 +165,11 @@ export function useFilmes() {
 		};
 		const token = `Bearer ${localStorage.getItem('token')}`;
 		if (token) {
+			if (classificacao == '0') {
+				setError(true);
+				setErrorMessage('Favor informar a classificação');
+				setLoading(false);
+			}
 			const response = await filmesService.patchFilme(token, body, id);
 			if (response == 'Unauthorized') {
 				localStorage.removeItem('token');

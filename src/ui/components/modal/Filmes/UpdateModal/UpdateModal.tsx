@@ -20,6 +20,7 @@ export function UpdateModal({ ...props }) {
 			imagem,
 			classificacao
 		);
+		toogle();
 	}
 
 	function updateUrl(
@@ -38,6 +39,7 @@ export function UpdateModal({ ...props }) {
 			newImage,
 			classificacao
 		);
+		toogle();
 	}
 
 	function toogle() {

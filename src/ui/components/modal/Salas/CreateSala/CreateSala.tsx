@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import {
 	Button,
 	Form,
@@ -11,8 +10,6 @@ import {
 	ModalHeader
 } from 'reactstrap';
 
-import { AlertError } from '../../../alert/Alert/AlertModal';
-import { AlertModalError } from '../../../alert/AlertModal/Alert';
 import styles from './CreateSala.module.css';
 
 export function CreateSala({ ...props }) {
@@ -33,7 +30,7 @@ export function CreateSala({ ...props }) {
 						<Label>Nome da Sala</Label>
 						<Input
 							type="text"
-							placeholder="Informe o nome da tag"
+							placeholder="Informe o nome da sala"
 							required
 							value={props.salaName}
 							onChange={(e: any) => {
