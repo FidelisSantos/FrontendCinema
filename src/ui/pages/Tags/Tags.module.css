@@ -1,0 +1,94 @@
+.header-container{
+  position: fixed;
+  width: 100%;
+  height: 66px;
+  top:0;
+}
+
+.alert-container{
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  position: fixed;
+  top: 0;
+}
+
+.erro-listagem{
+  display: flex;
+  font-size: 15rem;
+  justify-content: center;
+  margin-top: 10%;
+}
+
+.erro-listagem img{
+  width: 400px;
+}
+
+.loader-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 35vh;
+}
+
+.tags-container {
+  overflow-y:auto;
+  overflow-x: hidden;
+  height: 100vh; 
+}
+
+.tags-container::-webkit-scrollbar{
+  width: 5px;
+  background-color: black;
+}
+.tags-container::-webkit-scrollbar-thumb{
+  background: gray;
+}
+
+.table-tags-container{
+  margin-top: 66px;
+  display: flex;
+  text-align: center;
+  width: 100%;
+  overflow-y:auto;
+  overflow-x: hidden;
+}
+
+.search-container{
+  display: flex;
+  height: 8%;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+}
+
+.th-container {
+  width: 33%;
+}
+
+.search-container-input{
+  display: flex;
+  justify-content: end;
+  width: 70%;
+  min-width: 100px;
+}
+
+.btn-search {
+  background-color: black;
+}
+
+.btn-search:hover {
+  transition: 0.7s;
+  background-color: rgb(3, 3, 3);
+  color:red;
+}
+
+.btn-reset {
+  background-color: rgb(138, 0, 0);
+}
+
+.btn-reset:hover {
+  transition: 0.7s;
+  background-color: rgb(179, 1, 1);
+  color: black;
+}
+

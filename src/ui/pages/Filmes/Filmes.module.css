@@ -1,0 +1,95 @@
+.header-container{
+  position: fixed;
+  width: 100%;
+  height: 66px;
+  top:0;
+}
+
+.alert-container{
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  position: fixed;
+  top: 0;
+}
+
+.erro-listagem{
+  display: flex;
+  font-size: 15rem;
+  justify-content: center;
+  margin-top: 10%;
+}
+
+.erro-listagem img{
+  width: 400px;
+}
+
+.loader-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 35vh;
+}
+
+.filmes {
+  margin-top: 67px;
+  display: flex;
+  justify-content: space-between;
+  color: white;
+  overflow: hidden;
+}
+
+.search-container {
+  display: flex;
+  width: 95%;
+  height: 40px;
+  justify-items: center;
+}
+
+.search-input {
+  text-align: center;
+}
+
+.btn-search {
+  background-color: black;
+}
+
+.btn-search:hover {
+  transition: 0.7s;
+  background-color: rgb(3, 3, 3);
+  color:red;
+}
+
+.btn-reset {
+  background-color: rgb(138, 0, 0);
+}
+
+.btn-reset:hover {
+  transition: 0.7s;
+  background-color: rgb(179, 1, 1);
+  color: black;
+}
+
+.add-button {
+  width: 5%;
+  color:rgb(3, 3, 3);
+  font-size: 1.5rem;
+  background-color: rgb(255, 255, 255);
+}
+
+.filmes-container{
+  display: grid;
+  grid-template-columns: 35% 35% 35%;
+  width: 100%;
+  justify-content: center;
+  height: calc(100vh - 70px - 40px);
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.filmes-container::-webkit-scrollbar{
+  width: 5px;
+  background-color: black;
+}
+.filmes-container::-webkit-scrollbar-thumb{
+  background: gray;
+}

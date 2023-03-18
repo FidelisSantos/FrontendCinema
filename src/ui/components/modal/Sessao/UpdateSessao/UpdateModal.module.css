@@ -1,0 +1,31 @@
+.modal-header {
+  justify-content: center;
+  background-color: black;
+  color: white;
+}
+
+.modal-select-filme ,.modal-select-sala, .modal-select-datetime{
+  width: 100%;
+  margin-bottom: 15px;
+  overflow: auto;
+}
+
+.modal-button-container{
+  display: flex;
+  justify-content: center;
+}
+
+.modal-button{
+  margin: 5px;
+  text-align: center;
+  background-color: rgb(37, 37, 37);
+  color: white;
+}
+
+.modal-button:hover{
+  text-align: center;
+  transform: 0.5s;
+  opacity: 0.9;
+  background-color: black;
+  color: red;
+}
